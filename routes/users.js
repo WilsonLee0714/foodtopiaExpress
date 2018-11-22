@@ -33,7 +33,9 @@ router
     } else {
       connection.query("SELECT * FROM `members` WHERE email = ? AND password = ?", [email, password], function (error, rows) {
         if (error) throw error;
-        if (rows != "") {
+        if (rows != "" && rows[0].email == 'ckhtpe@gmail.com') {
+          res.redirect('http://localhost/foodtopia/ab_list.php');
+        } else if(rows != "") {
           req.session.loginID = rows;
           res.redirect('http://localhost:3001/memberCenter/basicInfo');
           // res.json(rows);
@@ -42,7 +44,7 @@ router
         }
       })
     }
-  });
+  }); 
 
 
 module.exports = router;
