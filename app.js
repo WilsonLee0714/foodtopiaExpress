@@ -10,6 +10,12 @@ var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
 
 var app = express();
+var bodyParser = require('body-Parser');
+
+//bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+//bodyParser
 
 // session
 var cookieParser = require('cookie-parser');
