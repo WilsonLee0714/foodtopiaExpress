@@ -36,6 +36,8 @@ router
                 } else if (rows != "") {
                     req.session.email = rows[0].email;
                     req.session.sid = rows[0].sid;
+                    req.session.name = rows[0].name;
+                    req.session.nickname = rows[0].nick_name;
                     req.session.login = 1;
                     res.redirect('http://localhost:3001/memberCenter/basicInfo');
                     // res.send(req.session);

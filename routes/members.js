@@ -28,7 +28,7 @@ router
       res.json(rows);
     })
   })
-  .post(function (req, res) {//新增資料
+  .post(function (req, res) {//註冊用
     var email = req.body.email;
     connection.query("select * from members WHERE email=?",email, function (error, rows) {
       if (error) throw error;
