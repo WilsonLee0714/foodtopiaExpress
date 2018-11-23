@@ -8,10 +8,21 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
+var sessionRouter = require('./routes/session');
 
 var app = express();
 var bodyParser = require('body-Parser');
-
+//
+//設定跨域訪問
+// app.all('*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//   res.header("X-Powered-By",' 3.2.1')
+//   res.header("Content-Type", "application/json;charset=utf-8");
+//   next();
+// });
+//
 //bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,16 +33,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var app = express(); 
 app.use(cookieParser());
-app.use(session({ secret: "Shh, its a secret!" }));
-app.get('/9', function (req, res) {
-  if (req.session.page_views) {
-    req.session.page_views++;
-    res.send("You visited this page " + req.session.page_views + " times");
-  } else {
-    req.session.page_views = 1;
-    res.send("Welcome to this page for the first time!");
-  }
-});
+app.use(session({ secret: "123456",name:"session"}));
 // 
 
 
@@ -49,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', membersRouter);
+app.use('/session', sessionRouter);
 
 
 
