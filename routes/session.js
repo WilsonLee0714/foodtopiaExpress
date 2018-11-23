@@ -1,14 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require("mysql");
-//session
-// var cookieParser = require('cookie-parser');
-// var session = require('express-session');
-// var app = express(); 
-// app.use(cookieParser());
-// app.use(session({ secret: "Shh, its a secret!" }));
-//session
-
 
 //建立連線
 var connection = mysql.createConnection({
@@ -30,7 +22,7 @@ connection.connect(function (err) {
 
 router
     .route("/user")
-    .post(function (req, res) {//登入判斷與儲存
+    .post(function (req, res) {//登入
         var email = req.body.email;
         var password = req.body.password;
         if (email == "") {
@@ -55,14 +47,14 @@ router
     });
 router
     .route("/logout")
-    .get(function (req, res) {//登入判斷與儲存
+    .get(function (req, res) {//登出
         req.session.destroy();
         res.redirect('http://localhost:3001/homePage');
 
     });
 router
     .route("/login")
-    .get(function (req, res) {//登入判斷與儲存
+    .get(function (req, res) {//是否已經登入
         if (req.session.login) {
             res.redirect('http://localhost:3001/memberCenter/basicInfo');
         } else {
@@ -72,8 +64,9 @@ router
     });
 router
     .route("/info")
-    .get(function (req, res) {//登入判斷與儲存
-        // res.setHeader("Access-Control-Allow-Credentials","true");
+    .get(function (req, res) {//取登入帳號資料
+        res.setHeader("Access-Control-Allow-Origin","http://localhost:3001");
+        res.setHeader("Access-Control-Allow-Credentials","true");
         res.send(req.session);
         // res.send(req.session.email);
         // res.send('okok');
