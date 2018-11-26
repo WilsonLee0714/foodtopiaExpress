@@ -58,6 +58,7 @@ router
     .route("/login")
     .get(function (req, res) {//是否已經登入
         if (req.session.login) {
+            console.log(req.session);
             res.redirect('http://localhost:3001/memberCenter/basicInfo');
         } else {
             res.redirect('http://localhost:3001/login');
@@ -67,12 +68,26 @@ router
 router
     .route("/info")
     .get(function (req, res) {//取登入帳號資料
-        res.setHeader("Access-Control-Allow-Origin","http://localhost:3001");
-        res.setHeader("Access-Control-Allow-Credentials","true");
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
         res.send(req.session);
         // res.send(req.session.email);
         // res.send('okok');
+    })
+    .post(function (req, res) {//修改資料
+        // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+        // res.setHeader("Access-Control-Allow-Credentials", "true");
+        var _member = req.body;
+        console.log(_member);
+        var id = req.body.sid;
+        console.log(id);
+        connection.query("update members set ? where sid=?", [_member, id], function (error) {
+            if (error) throw error;
+            req.session.req.session.nickname = req.body.nick_name;
+            res.redirect('http://localhost:3001/memberCenter/basicInfo');
+        });
     });
+
 
 
 module.exports = router;
