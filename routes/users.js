@@ -30,33 +30,30 @@ connection.connect(function (err) {
 
 router
   .route("/login")
-  .post(function (req, res) {//登入判斷與儲存
-
-    if (req.session.user) {
-      var user = req.session.user;
-      req.session.destroy();
-      res.json(user);
-
-    } else {
-      var email = req.body.email;
-      var password = req.body.password;
-      if (email == "") {
-        res.redirect('http://localhost:3001/login');
-        // res.json('wrong')
+  .post(function (req, res) {//註冊用
+    // 
+    function IsEmail(email) {
+      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if (!regex.test(email)) {
+          return false;
       } else {
-        connection.query("SELECT * FROM `members` WHERE email = ? AND password = ?", [email, password], function (error, rows) {
-          if (error) throw error;
-          if (rows != "" && rows[0].email == 'ckhtpe@gmail.com') {
-            res.redirect('http://localhost/foodtopia/ab_list.php');
-          } else if (rows != "") {
-            // req.session.user = { state: '已經登入' };
-            res.redirect('http://localhost:3001/memberCenter/basicInfo');
-            // res.json(rows);
-          } else {
-            res.redirect('http://localhost:3001/login');
-          }
-        })
+          return true;
       }
+  };
+    // 
+    console.log(req.body.email);
+    var email = req.body.email;
+    if(!IsEmail(email)){
+      res.send('Email格式不正確!!');
+    } else {
+      connection.query("select * from members WHERE email=?",email, function (error, rows) {
+        if (error) throw error;
+        if(rows != ''){
+          res.send('此Email信箱已經有人註冊了!!');
+        } else {
+          res.send('此Email信箱可以使用');
+        }
+      })
     }
   });
 router
