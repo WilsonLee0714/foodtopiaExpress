@@ -38,6 +38,8 @@ router
                     req.session.sid = rows[0].sid;
                     req.session.name = rows[0].name;
                     req.session.nickname = rows[0].nick_name;
+                    req.session.password = rows[0].password;
+                    req.session.profile = rows[0].profile;
                     req.session.login = 1;
                     res.redirect('http://localhost:3001/memberCenter/basicInfo');
                     // res.send(req.session);
@@ -83,7 +85,8 @@ router
         console.log(id);
         connection.query("update members set ? where sid=?", [_member, id], function (error) {
             if (error) throw error;
-            req.session.req.session.nickname = req.body.nick_name;
+            req.session.nickname = req.body.nick_name;
+            req.session.password = req.body.password;
             res.redirect('http://localhost:3001/memberCenter/basicInfo');
         });
     });

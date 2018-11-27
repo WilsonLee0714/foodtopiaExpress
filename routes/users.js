@@ -35,32 +35,44 @@ router
     function IsEmail(email) {
       var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       if (!regex.test(email)) {
-          return false;
+        return false;
       } else {
-          return true;
+        return true;
       }
-  };
+    };
     // 
     console.log(req.body.email);
     var email = req.body.email;
-    if(!IsEmail(email)){
+    if (!IsEmail(email)) {
       res.send('Email格式不正確!!');
     } else {
-      connection.query("select * from members WHERE email=?",email, function (error, rows) {
+      connection.query("select * from members WHERE email=?", email, function (error, rows) {
         if (error) throw error;
-        if(rows != ''){
+        if (rows != '') {
           res.send('此Email信箱已經有人註冊了!!');
         } else {
-          res.send('此Email信箱可以使用');
+          res.send('此Email信箱尚未註冊過');
         }
       })
     }
   });
 router
-  .route("/logout")
-  .get(function (req, res) {//登入判斷與儲存
-    req.session.user.destroy();
-    res.redirect('http://localhost:3001/homePage');
+  .route("/account")
+  .post(function (req, res) {//登入判斷與儲存
+    var email = req.body.email;
+    var password = req.body.password;
+    connection.query("SELECT * FROM `members` WHERE email = ? AND password = ?", [email, password], function (error, rows) {
+      if (error) throw error;
+      if (rows == "" ) {
+        res.send('wrong');
+        console.log('wrong');
+        console.log(rows);
+      } else {
+        res.send('ok');
+        console.log('ok');
+        console.log(rows);
+      }
+    })
 
   })
 
