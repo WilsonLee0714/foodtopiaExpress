@@ -5,9 +5,11 @@ var mysql = require("mysql");
 //建立連線
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
+  user     : 'foodtopia',
   password : '',
-  database : 'foodtopia'
+  database : 'foodtopia',
+  port: 3306
+
 });
 connection.connect();
 

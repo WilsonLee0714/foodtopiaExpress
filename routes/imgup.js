@@ -5,9 +5,11 @@ const multer  = require('multer');
 
 var connection = mysql.createConnection({
   host:'localhost',
-  user:'root',
+  user:'foodtopia',
   password:'',
   database:'foodtopia',
+  port: 3306
+
 });
 // connection.connect();
 connection.connect(function(err) {
