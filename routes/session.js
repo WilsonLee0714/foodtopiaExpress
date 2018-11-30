@@ -40,6 +40,8 @@ router
                     req.session.nickname = rows[0].nick_name;
                     req.session.password = rows[0].password;
                     req.session.profile = rows[0].profile;
+                    req.session.mobile = rows[0].mobile;
+                    req.session.address = rows[0].address;
                     req.session.login = 1;
                     res.redirect('http://localhost:3001/memberCenter/basicInfo');
                     // res.send(req.session);
@@ -78,17 +80,34 @@ router
     })
     .post(function (req, res) {//修改資料
         // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
-        // res.setHeader("Access-Control-Allow-Credentials", "true");
+        // res.setHeader("Access-Control-Allow-Credentials", "true");  
         var _member = req.body;
         console.log(_member);
         var id = req.body.sid;
         console.log(id);
         connection.query("update members set ? where sid=?", [_member, id], function (error) {
-            if (error) throw error;
-            req.session.nickname = req.body.nick_name;
-            req.session.password = req.body.password;
-            res.redirect('http://localhost:3001/memberCenter/basicInfo');
+            // req.session.nickname = req.body.nick_name;
+            // req.session.password = req.body.password;
+            // req.session.name = req.body.name;
+            // req.session.address = req.body.address;
+            // req.session.mobile = req.body.mobile;
+            if(true){
+                connection.query("SELECT * FROM `members` where sid=?", id, function (error, rows) {
+                    console.log(rows[0].sid)
+                    req.session.email = rows[0].email;
+                    req.session.sid = rows[0].sid;
+                    req.session.name = rows[0].name;
+                    req.session.nickname = rows[0].nick_name;
+                    req.session.password = rows[0].password;
+                    req.session.profile = rows[0].profile;
+                    req.session.mobile = rows[0].mobile;
+                    req.session.address = rows[0].address;
+                    req.session.login = 1;
+                    res.redirect('http://localhost:3001/memberCenter/basicInfo');
+                })
+            }
         });
+
     });
 
 
