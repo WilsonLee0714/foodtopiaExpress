@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
   user: 'root',
   password: '',
   database: 'foodtopia',
-  port: 3306
+  // port: 3306
 });
 // connection.connect();
 connection.connect(function (err) {
