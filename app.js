@@ -63,7 +63,7 @@ app.use(session({
 var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  user: 'foodtopia',
   password: '',
   database: 'foodtopia',
   port: 3306
