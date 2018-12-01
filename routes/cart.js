@@ -25,7 +25,7 @@ router
         res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         var _email = req.body.email;
-        connection.query("SELECT * FROM cart AS c INNER JOIN igr_test AS p ON c.product_id=p.product_id WH" +
+        connection.query("SELECT * FROM cart AS c INNER JOIN ingird_datasheet AS p ON c.product_id=p.product_id WH" +
             "ERE email=?",
             [_email],
             function (error, rows) {
