@@ -22,12 +22,11 @@ connection.connect(function (err) {
 router
     .route("/cart")
     .post(function (req, res) { //取得購物車內容
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
-        res.setHeader("Access-Control-Allow-Credentials", "true");
         var _email = req.body.email;
-        connection.query("SELECT * FROM cart AS c INNER JOIN ingird_datasheet AS p ON c.product_id=p.product_id WH" +
-            "ERE email=?",
-            [_email],
+        connection.query(
+            "SELECT c.sid, c.email, c.qty, p.product_name, p.price, p.spec, p.product_img " +
+            "FROM cart AS c INNER JOIN ingird_datasheet AS p ON c.product_id=p.product_id " +
+            "WHERE email=?", [_email],
             function (error, rows) {
                 if (error)
                     throw error;
@@ -37,38 +36,38 @@ router
 
 router
     .route("/cart/:sid")
-    .get(function (req, res) {
-        connection
-            .query("select * from cart where sid=?", req.params.sid, function (error, row) {
+    .get(function (req, res) { //取得購物車商品數量
+        connection.query(
+            "SELECT sid, qty " +
+            "FROM cart " +
+            "WHERE sid=?", req.params.sid,
+            function (error, row) {
                 if (error)
                     throw error;
                 res.json(row);
             });
-
     })
-    .put(function (req, res) { //修改資料
-        var _cart = req.body;
+    .put(function (req, res) { //修改購物車商品數量
+        var qty = req.body.qty;
         var sid = req.params.sid;
-        connection.query("update cart set ? where sid=?", [
-            _cart, sid
-        ], function (error) {
-            if (error)
-                throw error;
-            res.json({
-                message: "修改成功"
-            });
-        })
-
-    })
-    .delete(function (req, res) {
-        //刪除資料
-        connection
-            .query("delete from cart where sid=?", req.params.sid, function (error) {
+        connection.query(
+            "UPDATE cart " +
+            "SET qty=? " +
+            "WHERE sid=?", [qty, sid],
+            function (error) {
                 if (error)
                     throw error;
-                res.json({
-                    message: "刪除成功"
-                });
+                res.send("商品數量已修改")
+            })
+    })
+    .delete(function (req, res) { //刪除購物車商品
+        connection.query("DELETE " +
+            "FROM cart " +
+            "WHERE sid=?", req.params.sid,
+            function (error) {
+                if (error)
+                    throw error;
+                res.send("商品已刪除");
             })
     });
 
