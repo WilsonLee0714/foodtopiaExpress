@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     user:'foodtopia',
     password:'',
     database:'foodtopia', //資料庫名稱
-  port: 3306
+  // port: 3306
 
 });
 
