@@ -38,5 +38,29 @@ router
     res.json(row);
   });
 }) 
+router
+.route("/nutritional_value/:id")
+.get(function(req, res) {
+  connection.query("select * from `nutritional_value` WHERE `id`=?", req.params.id,function(error,row){
+    if(error) throw error;
+    res.json(row);
+  });
+}) 
+router
+.route("/step/:id")
+.get(function(req, res) {
+  connection.query("select * from `step` WHERE `id`=?", req.params.id,function(error,row){
+    if(error) throw error;
+    res.json(row);
+  });
+}) 
+router
+.route("/step_img/:id")
+.get(function(req, res) {
+  connection.query("select * from `step_img` WHERE `id`=?", req.params.id,function(error,row){
+    if(error) throw error;
+    res.json(row);
+  });
+}) 
   
 module.exports = router;

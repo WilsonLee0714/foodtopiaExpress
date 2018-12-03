@@ -45,7 +45,7 @@ router
         page = parseInt(req.params.page); //parseInt化
         startNum = (page - 1) * LimitNum; //依據頁數讀取第一筆的項目id
       }
-      var query = "select * from menu ORDER BY `id` DESC limit ? OFFSET ?"; //每頁項目範圍
+      var query = "select * from `menu` limit ? OFFSET ?"; //每頁項目範圍
       var params = [LimitNum, startNum];
       query = mysql.format(query, params); //format -> 將query取得的項目轉化成params格式
       connection.query(query, function (error, row) {
