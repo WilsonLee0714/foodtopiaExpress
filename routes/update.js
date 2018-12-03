@@ -23,7 +23,7 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("SELECT * FROM menu ORDER BY `id` DESC LIMIT 6", function(error, results) {
+    connection.query("SELECT * FROM `menu` LIMIT 6", function(error, results) {
       if (error) throw error;
       res.json(results);
     });
