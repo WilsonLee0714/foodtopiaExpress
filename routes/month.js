@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     user:'foodtopia',
     password:'',
     database:'foodtopia',
-  // port: 3306
+  port: 3306
   //資料庫名稱
 });
 
@@ -28,7 +28,7 @@ router
     });
   });
 
-//月份分類
+//單月的食譜清單
 router
 .route("/menu/:upload_time_sid")
 .get(function(req, res) {
@@ -38,4 +38,14 @@ router
   });
 });
 
-module.exports = router;
+router
+  .route("/month_total")
+  .get(function(req, res) {
+    connection.query("Select * from menu", function(error, rows) {
+      if (error) throw error;
+      res.json(rows);
+    });
+  });
+
+
+module.exports = router;  

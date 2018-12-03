@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
   user:'foodtopia',
   password:'',
   database:'foodtopia',
-  // port: 3306
+  port: 3306
 
 });
 // connection.connect();
@@ -53,5 +53,40 @@ router
        res.json({ message: "新增成功" });
     })
   }); 
+
+// //新增圖片
+// router
+//   .route("/upload_name")
+//   .get(function(req, res) {//讀所有資料
+//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id`",function(error,rows){
+//       if (error) throw error;
+//       res.json(rows);
+//     })
+//   }) 
+//   .post(function(req, res) {
+//      var _user = req.body;
+//     connection.query("insert into community set ?", _user,function(error){
+//        if (error) throw error;
+//        res.json({ message: "新增成功" });
+//     })
+//   }); 
+// //修改圖片檔名
+//   router
+//   .route("/upload_name/:sid")
+//   .get(function(req, res) {
+//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` where sid=?", req.params.sid,function(error,row){
+//       if(error) throw error;
+//       res.json(row);
+//     });
+//   }) 
+//   .put(function(req, res) {
+//        var _member = req.body;  
+//        var id = req.params.id;
+//        connection.query("update `members`, `community` FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` set ? where sid=?",[_member, id],function(error){
+//           if(error) throw error;
+//           res.json({ message: "修改成功" });
+//        })
+
+//   }) 
 
 module.exports = router;
