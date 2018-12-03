@@ -21,6 +21,7 @@ var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
 var sessionRouter = require('./routes/session');
 var cartRouter = require('./routes/cart');
+var orderRouter = require('./routes/order');
 //brain
 var ingredientsRouter = require('./routes/ingredients');
 
@@ -96,6 +97,7 @@ app.use('/users', usersRouter);
 app.use('/api', membersRouter);
 app.use('/session', sessionRouter);
 app.use('/cart', cartRouter);
+app.use('/order', orderRouter)
 //brain
 app.use('/api', ingredientsRouter);
 

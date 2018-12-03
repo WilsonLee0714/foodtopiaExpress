@@ -22,11 +22,11 @@ connection.connect(function (err) {
 router
     .route("/cart")
     .post(function (req, res) { //取得購物車內容
-        var _email = req.body.email;
+        var _sid = req.body.sid;
         connection.query(
-            "SELECT c.sid, c.email, c.qty, p.product_name, p.price, p.spec, p.product_img " +
+            "SELECT c.sid, c.member_sid, c.qty, p.product_name, p.price, p.spec, p.product_img " +
             "FROM cart AS c INNER JOIN ingird_datasheet AS p ON c.product_id=p.product_id " +
-            "WHERE email=?", [_email],
+            "WHERE member_sid=?", [_sid],
             function (error, rows) {
                 if (error)
                     throw error;
