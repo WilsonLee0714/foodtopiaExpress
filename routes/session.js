@@ -109,6 +109,18 @@ router
         });
 
     });
+router
+    .route("/active")
+    .get(function (req, res) {//激活
+        var _member = req.body;
+        var email = req.body.email;
+        var xxx ='ckhtpe@gmail.com';
+        console.log(_member)
+        connection.query("update members set account=1 where email=?", [xxx], function (error) {
+            res.send('信箱激活成功!!');
+        });
+    })
+
 
 
 

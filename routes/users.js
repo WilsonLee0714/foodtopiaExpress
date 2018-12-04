@@ -73,7 +73,6 @@ router
         console.log(rows);
       }
     })
-
   })
 
 
