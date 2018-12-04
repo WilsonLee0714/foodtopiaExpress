@@ -19,9 +19,11 @@ connection.connect(function (err) {
     console.log("connected as id " + connection.threadId);
 });
 
+
 router
     .route("/cart")
-    .post(function (req, res) { //取得購物車內容
+    //取得購物車內容
+    .post(function (req, res) { 
         var _sid = req.body.sid;
         connection.query(
             "SELECT c.sid, c.member_sid, c.qty, p.product_name, p.price, p.spec, p.product_img " +
@@ -34,9 +36,11 @@ router
             })
     });
 
+
 router
     .route("/cart/:sid")
-    .get(function (req, res) { //取得購物車商品數量
+    //取得購物車商品數量
+    .get(function (req, res) { 
         connection.query(
             "SELECT qty " +
             "FROM cart " +
@@ -47,7 +51,8 @@ router
                 res.json(row);
             });
     })
-    .put(function (req, res) { //修改購物車商品數量
+    //修改購物車商品數量
+    .put(function (req, res) { 
         var qty = req.body.qty;
         var sid = req.params.sid;
         connection.query(
@@ -60,8 +65,10 @@ router
                 res.send("商品數量已修改")
             })
     })
-    .delete(function (req, res) { //刪除購物車商品
-        connection.query("DELETE " +
+    //刪除購物車商品
+    .delete(function (req, res) { 
+        connection.query(
+            "DELETE " +
             "FROM cart " +
             "WHERE sid=?", req.params.sid,
             function (error) {
@@ -69,6 +76,22 @@ router
                     throw error;
                 res.send("商品已刪除");
             })
+    });
+
+    router
+    .route("/addCart")
+    //加入購物車
+    .post(function (req, res) { 
+      var _body = req.body;
+      connection.query(
+          "INSERT INTO cart (member_sid, product_id, qty) "+
+          "VALUES (?, ?, ?)",[_body.sid, _body.product_sid, _body.qty], function (error) {
+        if (error)
+          throw error;
+        res.json({
+          message: "新增成功"
+        });
+      })
     });
 
 module.exports = router;
