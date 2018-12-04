@@ -42,6 +42,10 @@ router
                     req.session.profile = rows[0].profile;
                     req.session.mobile = rows[0].mobile;
                     req.session.address = rows[0].address;
+                    req.session.county = rows[0].county;
+                    req.session.district = rows[0].district;
+                    req.session.zipCode = rows[0].zipCode;
+                    req.session.address = rows[0].address;
                     req.session.login = 1;
                     res.redirect('http://localhost:3001/memberCenter/basicInfo');
                     // res.send(req.session);
