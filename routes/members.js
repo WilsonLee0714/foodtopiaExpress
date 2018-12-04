@@ -62,7 +62,7 @@ nodemailer.createTestAccount((err, account) => {
         to: email, // list of receivers
         subject: '註冊驗證信', // Subject line
         text: '點選連結驗證此信箱', // plain text body
-    html: `<form action='http://localhost:3000/session/active' method='get'>Hello <input type="text" disabled="disabled" value='${nick_name}'/><br><p>您註冊的信箱為<input type="text" disabled="disabled" name='email' value='${email}'/><input type="hidden" name='account' value='1'/></p><br><input type='submit'>點選連結驗證此信箱..</input></form><a href="http://localhost:3000/session/active?email=${email}&account=1">點選連結驗證此信箱..</a>` // html body
+    html: `<form action='http://localhost:3000/session/active' method='get'>Hello <input type="text" disabled="disabled" value='${nick_name}'/><br><p>您註冊的信箱為<input type="text" disabled="disabled" name='email' value='${email}'/></p><br><input type='submit'>點選連結驗證此信箱..</input></form><a href="http://localhost:3000/session/active?email=${email}&account=1">點選連結驗證此信箱..</a>` // html body
     };
 
     // send mail with defined transport object
