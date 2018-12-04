@@ -61,7 +61,7 @@ nodemailer.createTestAccount((err, account) => {
         to: email, // list of receivers
         subject: '註冊驗證信', // Subject line
         text: '點選連結驗證此信箱', // plain text body
-        html: '<b>點選連結驗證此信箱</b>' // html body
+        html: '<a>點選連結驗證此信箱..</a>' // html body
     };
 
     // send mail with defined transport object
