@@ -31,9 +31,9 @@ router
   .post(function (req, res) {//註冊用
     var email = req.body.email;
     var nick_name = req.body.nick_name;
-    connection.query("select * from members WHERE email=?",email, function (error, rows) {
+    connection.query("select * from members WHERE email=?", email, function (error, rows) {
       if (error) throw error;
-      if(rows != ''){
+      if (rows != '') {
         res.send('帳號重複');
       } else {
 
@@ -42,46 +42,46 @@ router
           if (error) throw error;
 
           // gmail
-const nodemailer = require('nodemailer');
+          const nodemailer = require('nodemailer');
 
-// Generate test SMTP service account from ethereal.email
-// Only needed if you don't have a real mail account for testing
-nodemailer.createTestAccount((err, account) => {
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: 'foodtopiatpe@gmail.com',
-        pass: '7890uiop'
-      }
-    });
+          // Generate test SMTP service account from ethereal.email
+          // Only needed if you don't have a real mail account for testing
+          nodemailer.createTestAccount((err, account) => {
+            // create reusable transporter object using the default SMTP transport
+            let transporter = nodemailer.createTransport({
+              service: 'Gmail',
+              auth: {
+                user: 'foodtopiatpe@gmail.com',
+                pass: '7890uiop'
+              }
+            });
 
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: '"foodtopia驗證信" <foodtopiatpe@gmail.com>', // sender address
-        to: email, // list of receivers
-        subject: '註冊驗證信', // Subject line
-        text: '點選連結驗證此信箱', // plain text body
-    html: `Hello ${nick_name}<br><p>您註冊的信箱為${email}</p><br><a href="http://localhost:3000/session/active?email=${email}">點選連結驗證此信箱..</a>` // html body
-    };
+            // setup email data with unicode symbols
+            let mailOptions = {
+              from: '"foodtopia驗證信" <foodtopiatpe@gmail.com>', // sender address
+              to: email, // list of receivers
+              subject: '註冊驗證信', // Subject line
+              text: '點選連結驗證此信箱', // plain text body
+              html: `Hello ${nick_name}<br><p>您註冊的信箱為${email}</p><br><a href="http://localhost:3000/session/active?email=${email}">點選連結驗證此信箱..</a>` // html body
+            };
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        res.redirect('http://localhost:3001/registerSuccessful');
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                return console.log(error);
+              }
+              console.log('Message sent: %s', info.messageId);
+              // Preview only available when sending through an Ethereal account
+              console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+              res.redirect('http://localhost:3001/registerSuccessful');
 
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
-    
-});
+              // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+              // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+            });
 
-// 
+          });
+
+          // 
           //  res.json({ message: "新增成功" });
         })
       }
@@ -111,6 +111,51 @@ router
       res.json({ message: "刪除成功" });
     })
   });
+router
+  .route("/resend")
+  .post(function (req, res) {
+    var email = req.body.email;
+   // gmail
+   const nodemailer = require('nodemailer');
+
+   // Generate test SMTP service account from ethereal.email
+   // Only needed if you don't have a real mail account for testing
+   nodemailer.createTestAccount((err, account) => {
+     // create reusable transporter object using the default SMTP transport
+     let transporter = nodemailer.createTransport({
+       service: 'Gmail',
+       auth: {
+         user: 'foodtopiatpe@gmail.com',
+         pass: '7890uiop'
+       }
+     });
+
+     // setup email data with unicode symbols
+     let mailOptions = {
+       from: '"foodtopia驗證信" <foodtopiatpe@gmail.com>', // sender address
+       to: email, // list of receivers
+       subject: '註冊驗證信', // Subject line
+       text: '點選連結驗證此信箱', // plain text body
+       html: `若無註冊可以不須理會此封郵件<p>您註冊的信箱為${email}</p><br><a href="http://localhost:3000/session/active?email=${email}">點選連結驗證此信箱..</a>` // html body
+     };
+
+     // send mail with defined transport object
+     transporter.sendMail(mailOptions, (error, info) => {
+       if (error) {
+         return console.log(error);
+       }
+       console.log('Message sent: %s', info.messageId);
+       // Preview only available when sending through an Ethereal account
+       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+       res.redirect('http://localhost:3001/registerSuccessful');
+
+       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+       // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+     });
+
+   });
+  })
+
 
 
 
