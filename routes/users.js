@@ -76,6 +76,13 @@ router
       }
     })
   })
+  .get(function (req, res) {//取訂單
+    var sid = req.query.sid;
+    connection.query("SELECT * FROM `orders` WHERE member_sid = ?", [sid], function (error, rows) {
+      if (error) throw error;
+      res.send(rows);
+    })
+  })
 
 
 
