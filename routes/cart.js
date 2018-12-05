@@ -77,6 +77,44 @@ router
     });
 
 router
+    .route("/addCart/:product_id")
+    //加入購物車
+    .get(function (req, res) {
+        var product_id = req.params.product_id;
+        connection.query(
+            "SELECT sid, qty " +
+            "FROM cart " +
+            "WHERE member_sid=? AND product_id=?", [req.session.sid, product_id],
+            function (error, row) {
+                if (error)
+                    throw error;
+
+                if (!row.length) {
+                    connection.query(
+                        "INSERT INTO cart (member_sid, product_id) " +
+                        "VALUES (?,?)", [req.session.sid, product_id],
+                        function (error) {
+                            if (error)
+                                throw error;
+                        })
+                } else {
+                    let newQty = row[0].qty + 1,
+                        sid = row[0].sid
+                    connection.query(
+                        "UPDATE cart " +
+                        "SET qty=? " +
+                        "WHERE sid=?", [newQty, sid],
+                        function (error) {
+                            if (error)
+                                throw error;
+                        })
+                } 
+            });
+        res.json({
+            message: "新增成功"
+        });
+    });
+router
     .route("/addCart")
     //加入購物車
     .post(function (req, res) {
