@@ -1,7 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require("mysql");
+// url
+var url = require('url');
 
+
+
+
+// 
 //建立連線
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -31,9 +37,11 @@ router
         } else {
             connection.query("SELECT * FROM `members` WHERE email = ? AND password = ?", [email, password], function (error, rows) {
                 if (error) throw error;
-                if (rows != "" && rows[0].email == 'ckhtpe@gmail.com') {
+                if (rows != "" && rows[0].email == 'foodtopia@gmail.com') {
                     res.redirect('http://localhost/foodtopia/ab_list.php');
-                } else if (rows != "") {
+                } else if (rows != "" && rows[0].account != 1) {
+                    res.send("信箱還未激活");
+                } else if(rows != "") {
                     req.session.email = rows[0].email;
                     req.session.sid = rows[0].sid;
                     req.session.name = rows[0].name;
@@ -95,7 +103,7 @@ router
             // req.session.name = req.body.name;
             // req.session.address = req.body.address;
             // req.session.mobile = req.body.mobile;
-            if(true){
+            if (true) {
                 connection.query("SELECT * FROM `members` where sid=?", id, function (error, rows) {
                     console.log(rows[0].sid)
                     req.session.email = rows[0].email;
@@ -119,11 +127,11 @@ router
 router
     .route("/active")
     .get(function (req, res) {//激活
-        var _member = req.body;
-        var email = req.body.email +'';
-        var xxx ='ckhtpe@gmail.com';
-        console.log(_member)
-        connection.query("update members set account=0 where email=?", [email], function (error) {
+        var _member = req.query.email;
+        console.log('test');
+        console.log(req.query.email);
+        console.log('test');
+        connection.query("update members set account=1 where email=?", [_member], function (error) {
             res.send('信箱激活成功!!');
         });
     })
