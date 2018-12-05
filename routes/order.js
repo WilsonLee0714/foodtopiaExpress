@@ -42,7 +42,11 @@ router
             shipDate = dateData.getDate(),
             shipHours = timeData.getHours(),
             _shipDate = `${shipYear}-${shipMonth}-${shipDate}`,
-            _shipTime = `${shipHours}:00:00`;
+            _shipTime = `${shipHours}:00:00`,
+            orderMember = req.body.fields.member_sid
+        if (orderMember < 100) {
+            orderMember = '0' + orderMember;
+        }
         if (month < 10) {
             month = '0' + month;
         }
@@ -58,7 +62,7 @@ router
         if (seconds < 10) {
             seconds = '0' + seconds;
         }
-        var _order_num = `${fields.member_sid}${year}${month}${date}${hours}${minutes}${seconds}`;
+        var _order_num = `${orderMember}${year}${month}${date}${hours}${minutes}${seconds}`;
 
         connection.query(
             "INSERT INTO orders (order_num, member_sid, name, tel, mobile, zipCode, county, district, address, ship, ship_date, ship_time, note, pay, amount) " +

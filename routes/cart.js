@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
     database: 'foodtopia',
     port: 3306
 });
-// connection.connect();
+
 connection.connect(function (err) {
     if (err) {
         console.error("error connecting: " + err.stack);
@@ -19,16 +19,14 @@ connection.connect(function (err) {
     console.log("connected as id " + connection.threadId);
 });
 
-
 router
     .route("/cart")
     //取得購物車內容
-    .post(function (req, res) { 
-        var member_sid = req.body.member_sid;
+    .get(function (req, res) {
         connection.query(
             "SELECT c.sid, c.member_sid, c.qty, c.product_id, p.product_name, p.price, p.spec, p.product_img " +
             "FROM cart AS c INNER JOIN igr_test AS p ON c.product_id=p.product_id " +
-            "WHERE member_sid=?", [member_sid],
+            "WHERE member_sid=?", [req.session.sid],
             function (error, rows) {
                 if (error)
                     throw error;
@@ -40,7 +38,7 @@ router
 router
     .route("/cart/:sid")
     //取得購物車商品數量
-    .get(function (req, res) { 
+    .get(function (req, res) {
         connection.query(
             "SELECT qty " +
             "FROM cart " +
@@ -52,7 +50,7 @@ router
             });
     })
     //修改購物車商品數量
-    .put(function (req, res) { 
+    .put(function (req, res) {
         var qty = req.body.qty;
         var sid = req.params.sid;
         connection.query(
@@ -62,11 +60,11 @@ router
             function (error) {
                 if (error)
                     throw error;
-                res.send("商品數量已修改")
+                res.json("商品數量已修改")
             })
     })
     //刪除購物車商品
-    .delete(function (req, res) { 
+    .delete(function (req, res) {
         connection.query(
             "DELETE " +
             "FROM cart " +
@@ -74,24 +72,61 @@ router
             function (error) {
                 if (error)
                     throw error;
-                res.send("商品已刪除");
+                res.json("商品已刪除");
             })
     });
 
-    router
+router
     .route("/addCart")
     //加入購物車
-    .post(function (req, res) { 
-      var _body = req.body;
-      connection.query(
-          "INSERT INTO cart "+
-          "SET ?",_body, function (error) {
-        if (error)
-          throw error;
+    .post(function (req, res) {
+        var _body = req.body;
+        connection.query(
+            "SELECT sid, qty " +
+            "FROM cart " +
+            "WHERE member_sid=? AND product_id=?", [req.session.sid, _body.product_id],
+            function (error, row) {
+                if (error)
+                    throw error;
+
+                if (!row.length) {
+                    connection.query(
+                        "INSERT INTO cart (member_sid, product_id) " +
+                        "VALUES (?,?)", [req.session.sid, _body.product_id],
+                        function (error) {
+                            if (error)
+                                throw error;
+                        })
+                } else {
+                    let newQty = row[0].qty + 1,
+                        sid = row[0].sid
+                    connection.query(
+                        "UPDATE cart " +
+                        "SET qty=? " +
+                        "WHERE sid=?", [newQty, sid],
+                        function (error) {
+                            if (error)
+                                throw error;
+                        })
+                } 
+            });
         res.json({
-          message: "新增成功"
+            message: "新增成功"
         });
-      })
+    });
+    router
+    .route("/cleanCart")
+    //清空購物車商品
+    .delete(function (req, res) {
+        connection.query(
+            "DELETE " +
+            "FROM cart " +
+            "WHERE member_sid=?", [req.session.sid],
+            function (error) {
+                if (error)
+                    throw error;
+                res.json("購物車已經清空");
+            })
     });
 
 module.exports = router;

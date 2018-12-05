@@ -87,8 +87,8 @@ router
 router
     .route("/info")
     .get(function (req, res) {//取登入帳號資料
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
-        res.setHeader("Access-Control-Allow-Credentials", "true");
+        // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+        // res.setHeader("Access-Control-Allow-Credentials", "true");
         res.send(req.session);
         // res.send(req.session.email);
         // res.send('okok');
