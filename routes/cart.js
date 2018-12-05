@@ -108,51 +108,56 @@ router
                             if (error)
                                 throw error;
                         })
-                } 
+                }
             });
         res.json({
             message: "新增成功"
         });
     });
-router
-    .route("/addCart")
-    //加入購物車
-    .post(function (req, res) {
-        var _body = req.body;
-        connection.query(
-            "SELECT sid, qty " +
-            "FROM cart " +
-            "WHERE member_sid=? AND product_id=?", [req.session.sid, _body.product_id],
-            function (error, row) {
-                if (error)
-                    throw error;
 
-                if (!row.length) {
-                    connection.query(
-                        "INSERT INTO cart (member_sid, product_id) " +
-                        "VALUES (?,?)", [req.session.sid, _body.product_id],
-                        function (error) {
-                            if (error)
-                                throw error;
-                        })
-                } else {
-                    let newQty = row[0].qty + 1,
-                        sid = row[0].sid
-                    connection.query(
-                        "UPDATE cart " +
-                        "SET qty=? " +
-                        "WHERE sid=?", [newQty, sid],
-                        function (error) {
-                            if (error)
-                                throw error;
-                        })
-                } 
-            });
+router
+    .route("/allAddCart")
+    //食譜一鍵加入購物車
+    .post(function (req, res) {
+        let products = req.body.products;
+        for (i = 0; i < products.length; i++) {
+            let product_id = products[i].ingredients_img
+            connection.query(
+                "SELECT sid, qty " +
+                "FROM cart " +
+                "WHERE member_sid=? AND product_id=?", [req.session.sid, product_id],
+                function (error, row) {
+                    if (error)
+                        throw error;
+
+                    if (!row.length) {
+                        connection.query(
+                            "INSERT INTO cart (member_sid, product_id) " +
+                            "VALUES (?,?)", [req.session.sid, product_id],
+                            function (error) {
+                                if (error)
+                                    throw error;
+                            })
+                    } else {
+                        let newQty = row[0].qty + 1,
+                            sid = row[0].sid
+                        connection.query(
+                            "UPDATE cart " +
+                            "SET qty=? " +
+                            "WHERE sid=?", [newQty, sid],
+                            function (error) {
+                                if (error)
+                                    throw error;
+                            })
+                    }
+                });
+        }
         res.json({
             message: "新增成功"
         });
     });
-    router
+
+router
     .route("/cleanCart")
     //清空購物車商品
     .delete(function (req, res) {
