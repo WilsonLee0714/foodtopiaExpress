@@ -67,13 +67,14 @@ router
         res.send('wrong');
         console.log('wrong');
         console.log(rows);
+      } else if (rows[0].account != 1) {
+        res.send('inactive');
       } else {
         res.send('ok');
         console.log('ok');
         console.log(rows);
       }
     })
-
   })
 
 
