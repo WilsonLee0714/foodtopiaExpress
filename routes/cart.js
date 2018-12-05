@@ -24,11 +24,11 @@ router
     .route("/cart")
     //取得購物車內容
     .post(function (req, res) { 
-        var _sid = req.body.sid;
+        var member_sid = req.body.member_sid;
         connection.query(
-            "SELECT c.sid, c.member_sid, c.qty, p.product_name, p.price, p.spec, p.product_img " +
-            "FROM cart AS c INNER JOIN ingird_datasheet AS p ON c.product_id=p.product_id " +
-            "WHERE member_sid=?", [_sid],
+            "SELECT c.sid, c.member_sid, c.qty, c.product_id, p.product_name, p.price, p.spec, p.product_img " +
+            "FROM cart AS c INNER JOIN igr_test AS p ON c.product_id=p.product_id " +
+            "WHERE member_sid=?", [member_sid],
             function (error, rows) {
                 if (error)
                     throw error;
@@ -84,8 +84,8 @@ router
     .post(function (req, res) { 
       var _body = req.body;
       connection.query(
-          "INSERT INTO cart (member_sid, product_id, qty) "+
-          "VALUES (?, ?, ?)",[_body.sid, _body.product_sid, _body.qty], function (error) {
+          "INSERT INTO cart "+
+          "SET ?",_body, function (error) {
         if (error)
           throw error;
         res.json({

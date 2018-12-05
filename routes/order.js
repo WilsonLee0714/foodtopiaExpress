@@ -58,12 +58,12 @@ router
         if (seconds < 10) {
             seconds = '0' + seconds;
         }
-        var _order_num = `${fields.sid}${year}${month}${date}${hours}${minutes}${seconds}`;
+        var _order_num = `${fields.member_sid}${year}${month}${date}${hours}${minutes}${seconds}`;
 
         connection.query(
             "INSERT INTO orders (order_num, member_sid, name, tel, mobile, zipCode, county, district, address, ship, ship_date, ship_time, note, pay, amount) " +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-                _order_num, fields.sid, fields.name, fields.tel, fields.mobile, fields.zipCode, fields.county, fields.district, fields.address,
+                _order_num, fields.member_sid, fields.name, fields.tel, fields.mobile, fields.zipCode, fields.county, fields.district, fields.address,
                 fields.ship, _shipDate, _shipTime, fields.note, fields.pay, _body.amount
             ],
             function (error) {
@@ -74,7 +74,7 @@ router
             connection.query(
                 "INSERT INTO orders_details (order_num, product_sid, product_name, price, qty) " +
                 "VALUES (?,?,?,?,?)", [
-                    _order_num, products[i].sid, products[i].product_name, products[i].price, products[i].qty,
+                    _order_num, products[i].product_id, products[i].product_name, products[i].price, products[i].qty,
                 ],
                 function (error) {
                     if (error)

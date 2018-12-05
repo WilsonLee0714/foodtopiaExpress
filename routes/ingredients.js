@@ -39,7 +39,7 @@ router
     });
   })
 
-
+  
 // http://localhost:3000/api/ingredients_other
 router
 .route("/ingredients_other")
