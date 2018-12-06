@@ -39,6 +39,7 @@ router
     .route("/cart/:sid")
     //取得購物車商品數量
     .get(function (req, res) {
+        console.log(req.session.sid)
         connection.query(
             "SELECT qty " +
             "FROM cart " +

@@ -42,14 +42,15 @@ router
   .route("/upload_name")
   .get(function(req, res) {//讀所有資料
     console.log(req.session)
-    connection.query("SELECT * FROM community ORDER BY `id` DESC LIMIT 1",function(error,rows){
+    connection.query("SELECT img_name FROM community where `sid`=?",[req.session.sid],function(error,rows){
       if (error) throw error;
       res.json(rows);
     })
   }) 
-  .post(function(req, res) {//新增資料
+  .put(function(req, res) {//新增資料
      var _user = req.body;
-    connection.query("insert into community set ?", _user,function(error){
+     console.log(req.session.sid)
+    connection.query("UPDATE community SET img_name=? WHERE sid=?",[_user, req.session.sid],function(error){
        if (error) throw error;
        res.json({ message: "新增成功" });
     })

@@ -33,7 +33,11 @@ app.use(cors({
   credentials: true,
   Headers:"Origin, X-Requested-With, Content-Type, Accept"
 }));
-
+var session = require('express-session');
+app.use(session({
+  secret: "123456",
+  name: "session"
+}));
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "http://localhost:3001/");
 //   res.header('Access-Control-Allow-Credentials', 'true');
@@ -57,23 +61,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-//ming
-app.use('/foodtopia', foodtopiaRouter);
-app.use('/update', updateRouter);
-app.use('/upload', uploadRouter);
-app.use('/month', monthRouter);
-app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
-app.use('/talk', talkRouter);
-//yvn
-app.use('/api', recipeRouter);
-//session
-var session = require('express-session');
-app.use(session({
-  secret: "123456",
-  name: "session"
-}));
+
 // storage
 var mysql = require("mysql");
 var connection = mysql.createConnection({
@@ -107,6 +95,19 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
     res.redirect('http://localhost:3001/memberCenter/basicInfo');
   });
 })
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+//ming
+app.use('/foodtopia', foodtopiaRouter);
+app.use('/update', updateRouter);
+app.use('/upload', uploadRouter);
+app.use('/month', monthRouter);
+app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
+app.use('/talk', talkRouter);
+//yvn
+app.use('/api', recipeRouter);
+//session
+
 app.use('/users', usersRouter);
 app.use('/api', membersRouter);
 app.use('/session', sessionRouter);
