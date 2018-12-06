@@ -26,7 +26,7 @@ router
       if (error) throw error;
       res.json(rows);
     });
-  });
+});
 
   router
   .route("/menu/:page")
@@ -54,5 +54,14 @@ router
       });
     });
   })
+
+router
+  .route("/ingredients/:sid")
+  .get(function(req, res) {
+    connection.query("Select * from ingredients WHERE `sid`=?",req.params.sid,function(error, rows) {
+      if (error) throw error;
+      res.json(rows);
+    });
+});
 
 module.exports = router;
