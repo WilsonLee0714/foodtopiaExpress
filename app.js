@@ -16,6 +16,7 @@ var imgupRouter = require('./routes/imgup');
 var talkRouter = require('./routes/talk');
 //yvn
 var recipeRouter = require('./routes/recipe');
+var recipeListRouter = require('./routes/recipe_list');
 //wilson
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
@@ -54,6 +55,7 @@ app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供
 app.use('/talk', talkRouter);
 //yvn
 app.use('/api', recipeRouter);
+app.use('/api', recipeListRouter);
 //session
 var session = require('express-session');
 app.use(session({
