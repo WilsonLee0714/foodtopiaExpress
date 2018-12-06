@@ -37,7 +37,7 @@ var upload = multer({ storage: storage })
 router.post('/upload',upload.single('image'),function(req,res,next){
   res.send(req.file);
 })
-
+//上傳檔名
 router
   .route("/upload_name")
   .get(function(req, res) {//讀所有資料

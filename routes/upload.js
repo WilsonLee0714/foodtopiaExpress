@@ -18,7 +18,7 @@ connection.connect(function(err) {
     }
     console.log("connected as id " + connection.threadId);
 });
-//upload_date
+//月份篩選
 router
   .route("/upload_date") 
   .get(function(req, res) {
@@ -36,7 +36,7 @@ router
   });
 });
 
-//upload_ingredients
+//上傳食材篩選
 router
   .route("/upload_ingredients_name")
   .get(function(req, res) {
@@ -53,6 +53,5 @@ router
     res.json(results);
   });
 });
-
 
 module.exports = router;

@@ -38,14 +38,4 @@ router
   });
 });
 
-router
-  .route("/month_total")
-  .get(function(req, res) {
-    connection.query("Select * from menu", function(error, rows) {
-      if (error) throw error;
-      res.json(rows);
-    });
-  });
-
-
 module.exports = router;  
