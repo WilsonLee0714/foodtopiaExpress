@@ -8,7 +8,6 @@ var multer = require('multer');
 var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 
-
 //ming
 var foodtopiaRouter = require('./routes/foodtopia');
 var updateRouter = require('./routes/update');
@@ -57,17 +56,6 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-//ming
-app.use('/foodtopia', foodtopiaRouter);
-app.use('/update', updateRouter);
-app.use('/upload', uploadRouter);
-app.use('/month', monthRouter);
-app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
-app.use('/talk', talkRouter);
-//yvn
-app.use('/api', recipeRouter);
 //session
 var session = require('express-session');
 app.use(session({
@@ -107,6 +95,7 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
     res.redirect('http://localhost:3001/memberCenter/basicInfo');
   });
 })
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', membersRouter);
 app.use('/session', sessionRouter);
@@ -114,6 +103,15 @@ app.use('/cart', cartRouter);
 app.use('/order', orderRouter)
 //brain
 app.use('/api', ingredientsRouter);
+//ming
+app.use('/foodtopia', foodtopiaRouter);
+app.use('/update', updateRouter);
+app.use('/upload', uploadRouter);
+app.use('/month', monthRouter);
+app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
+app.use('/talk', talkRouter);
+//yvn
+app.use('/api', recipeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

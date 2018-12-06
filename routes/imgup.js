@@ -41,53 +41,27 @@ router.post('/upload',upload.single('image'),function(req,res,next){
 router
   .route("/upload_name")
   .get(function(req, res) {//讀所有資料
-    console.log(req.session)
-    connection.query("SELECT * FROM community ORDER BY `id` DESC LIMIT 1",function(error,rows){
+    var id = req.session.sid;
+    console.log(req.session.sid)
+    connection.query("SELECT `img_name` FROM `community` WHERE sid=?",[id],function(error,rows){
       if (error) throw error;
       res.json(rows);
     })
   }) 
-  .post(function(req, res) {//新增資料
-     var _user = req.body;
-    connection.query("insert into community set ?", _user,function(error){
-       if (error) throw error;
-       res.json({ message: "新增成功" });
+  // .post(function(req, res) {//新增資料
+  //    var _user = req.body;
+  //   connection.query("insert into community set ?", _user,function(error){
+  //      if (error) throw error;
+  //      res.json({ message: "新增成功" });
+  //     })
+  // })
+  .put(function(req, res) {
+    var img_name = req.body;  
+    var id = req.session.sid;
+    connection.query("update `community` SET `img_name`=? where sid=?",[img_name, id],function(error){
+      if(error) throw error;
+      res.json({ message: "修改成功" });
     })
-  }); 
-
-// //新增圖片
-// router
-//   .route("/upload_name")
-//   .get(function(req, res) {//讀所有資料
-//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id`",function(error,rows){
-//       if (error) throw error;
-//       res.json(rows);
-//     })
-//   }) 
-//   .post(function(req, res) {
-//      var _user = req.body;
-//     connection.query("insert into community set ?", _user,function(error){
-//        if (error) throw error;
-//        res.json({ message: "新增成功" });
-//     })
-//   }); 
-// //修改圖片檔名
-//   router
-//   .route("/upload_name/:sid")
-//   .get(function(req, res) {
-//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` where sid=?", req.params.sid,function(error,row){
-//       if(error) throw error;
-//       res.json(row);
-//     });
-//   }) 
-//   .put(function(req, res) {
-//        var _member = req.body;  
-//        var id = req.params.id;
-//        connection.query("update `members`, `community` FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` set ? where sid=?",[_member, id],function(error){
-//           if(error) throw error;
-//           res.json({ message: "修改成功" });
-//        })
-
-//   }) 
+  });
 
 module.exports = router;
