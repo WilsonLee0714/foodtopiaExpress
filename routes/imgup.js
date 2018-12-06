@@ -41,6 +41,7 @@ router.post('/upload',upload.single('image'),function(req,res,next){
 router
   .route("/upload_name")
   .get(function(req, res) {//讀所有資料
+    console.log(req.session)
     connection.query("SELECT * FROM community ORDER BY `id` DESC LIMIT 1",function(error,rows){
       if (error) throw error;
       res.json(rows);
