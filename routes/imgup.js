@@ -39,29 +39,69 @@ router.post('/upload',upload.single('image'),function(req,res,next){
 })
 //上傳檔名
 router
-  .route("/upload_name")
+  .route("/upload_img_name")
   .get(function(req, res) {//讀所有資料
-    var id = req.session.sid;
-    console.log(req.session.sid)
-    connection.query("SELECT `img_name` FROM `community` WHERE sid=?",[id],function(error,rows){
+    connection.query("SELECT img_name FROM community where `sid`=?",[req.session.sid],function(error,rows){
       if (error) throw error;
       res.json(rows);
     })
   }) 
-  // .post(function(req, res) {//新增資料
-  //    var _user = req.body;
-  //   connection.query("insert into community set ?", _user,function(error){
-  //      if (error) throw error;
-  //      res.json({ message: "新增成功" });
-  //     })
-  // })
-  .put(function(req, res) {
-    var img_name = req.body;  
-    var id = req.session.sid;
-    connection.query("update `community` SET `img_name`=? where sid=?",[img_name, id],function(error){
-      if(error) throw error;
-      res.json({ message: "修改成功" });
+  .put(function(req, res) {//新增資料
+     var _body = req.body;
+     console.log(_body)
+    connection.query("UPDATE community SET img_name=? WHERE sid=?",[_body.img_name, req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
     })
   });
-
+//welcome修改
+router
+  .route("/upload_welcome")
+  .get(function(req, res) {//讀所有資料
+    connection.query("SELECT welcome FROM community where `sid`=?",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+  }) 
+  .put(function(req, res) {//新增資料
+     var _body = req.body;
+     console.log(_body)
+    connection.query("UPDATE community SET welcome=? WHERE sid=?",[_body.welcome, req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    })
+});
+//introduction修改
+router
+  .route("/upload_introduction")
+  .get(function(req, res) {//讀所有資料
+    connection.query("SELECT introduction FROM community where `sid`=?",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+  }) 
+  .put(function(req, res) {//新增資料
+     var _body = req.body;
+     console.log(_body)
+    connection.query("UPDATE community SET introduction=? WHERE sid=?",[_body.introduction, req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    })
+});
+//社群修改
+router
+  .route("/upload_community")
+  .get(function(req, res) {//讀所有資料
+    connection.query("SELECT `id`,`facebook`, `instagram`, `google_plus`, `youtube`, `email` FROM `community` WHERE `sid`=?",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+  }) 
+  .put(function(req, res) {//新增資料
+     var _body = req.body;
+    connection.query("UPDATE `community` SET `facebook`=?,`instagram`=?,`google_plus`=?,`youtube`=?,`email`=? WHERE sid=?",[_body.facebook,_body.instagram,_body.google_plus,_body.youtube,_body.email,req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    })
+});
 module.exports = router;
