@@ -67,13 +67,21 @@ router
         res.send('wrong');
         console.log('wrong');
         console.log(rows);
+      } else if (rows[0].account != 1) {
+        res.send('inactive');
       } else {
         res.send('ok');
         console.log('ok');
         console.log(rows);
       }
     })
-
+  })
+  .get(function (req, res) {//取訂單
+    var sid = req.query.sid;
+    connection.query("SELECT * FROM `orders` WHERE member_sid = ?", [sid], function (error, rows) {
+      if (error) throw error;
+      res.send(rows);
+    })
   })
 
 

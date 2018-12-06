@@ -22,6 +22,7 @@
     "nodemailer": "^4.7.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "orm": "^5.0.2",
-    "static": "^2.0.0"
+    "static": "^2.0.0",
+    "url": "^0.11.0"
   }
 }
