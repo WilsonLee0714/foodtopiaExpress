@@ -168,8 +168,8 @@ router
             function (error) {
                 if (error)
                     throw error;
+                })
                 res.json("購物車已經清空");
-            })
     });
 
 module.exports = router;
