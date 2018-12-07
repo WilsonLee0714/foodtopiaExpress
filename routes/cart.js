@@ -122,7 +122,7 @@ router
     .post(function (req, res) {
         let products = req.body.products;
         for (i = 0; i < products.length; i++) {
-            let product_id = products[i].ingredients_img
+            let product_id = products[i].ingredients_id
             connection.query(
                 "SELECT sid, qty " +
                 "FROM cart " +
@@ -130,7 +130,6 @@ router
                 function (error, row) {
                     if (error)
                         throw error;
-
                     if (!row.length) {
                         connection.query(
                             "INSERT INTO cart (member_sid, product_id) " +
