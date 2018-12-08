@@ -51,4 +51,36 @@ router.route('/recipe/:id')
 //     res.send("刪除" + req.params.id + "資料");
 // })
 
+//評論
+router
+  .route("/recipe_comment/:id")
+  .get(function(req, res) {
+    connection.query("SELECT * FROM comment where `recipe_id`=?",req.params.id,function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+})
+router
+  .route("/nickname_comment")
+    .get(function(req, res) {
+    connection.query("SELECT `nick_name` FROM members where `sid`=?",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+})
+router
+  .route("/comment_upload")
+    .get(function(req, res) {//讀所有資料
+      connection.query("select * from comment",function(error,rows){
+        if (error) throw error;
+        res.json(rows);
+      })
+    }) 
+    .post(function(req, res) {//發表評論
+        var _body = req.body;
+        connection.query("INSERT INTO `comment`(`comment`, `recipe_id`, `members_id`, `comment_name`) VALUES (?,?,?,?)",[_body.comment,_body.recipe_id,req.session.sid,req.session.nickname],function(error){
+        if (error) throw error;
+        res.json({ message: "新增成功" });
+        })
+    })
 module.exports = router;
