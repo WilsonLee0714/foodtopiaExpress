@@ -46,7 +46,7 @@ router
 .get(function(req, res) {
   //GET http://localhost:3000/xxx/ingredients
   //  res.send("get all product");
-  connection.query("select * from igr_test where product_id between 3101 and 3703 ", function(error, results) {
+  connection.query("select * from igr_test where product_id between 3101 and 3809 ", function(error, results) {
     if (error) throw error;
     res.json(results);
   });
@@ -70,7 +70,7 @@ router
 .get(function(req, res) {
   //GET http://localhost:3000/xxx/ingredients
   //  res.send("get all product");
-  connection.query("select * from igr_test where product_id between 5101 and 5131 ", function(error, results) {
+  connection.query("select * from igr_test where product_id between 5101 and 5132 ", function(error, results) {
     if (error) throw error;
     res.json(results);
   });
@@ -82,7 +82,7 @@ router
 .get(function(req, res) {
   //GET http://localhost:3000/xxx/ingredients
   //  res.send("get all product");
-  connection.query("select * from igr_test where product_id between 6101 and 6827 ", function(error, results) {
+  connection.query("select * from igr_test where product_id between 6101 and 6828 ", function(error, results) {
     if (error) throw error;
     res.json(results);
   });
