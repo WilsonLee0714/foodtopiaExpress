@@ -14,14 +14,14 @@ var connection = mysql.createConnection({
 connection.connect();
 
 // http://localhost:3000/xxx/recipe/:id&:ca
-router.route('/recipe_list')
+router.route('/recipe_list/:id')
     .get(function(req, res){
         //GET http://localhost:3000/xxx/recipe
         // res.send("get all recipe")
-        connection.query('select * from `sector` ', function(error, results) {
+        connection.query('select * from `sector` where `category_id`=?',req.params.id, function(error, results) {
             if(error) throw error;
             res.json(results)
-            console.log("Database foodtopia connected")
+            // console.log("Database foodtopia connected")
         })
     })
     // .post(function(req, res){
@@ -46,20 +46,95 @@ router.route('/recipe_list/:id')
 })
 
 
-// 子分類下的食譜
-router.route('/recipe_sub/1')
+// 子分類下的食譜，須由不同API抓不同欄位
+router.route('/country/:id')
 .get(function(req, res){
-    //GET http://localhost:3000/api/recipe_list/sub2  
+    //GET http://localhost:3000/api/country/:id  
     // 讀取:id參數的值 req.params.id
     // res.send("get recipe id " + req.params.id);
     // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
     connection.query(
-        'SELECT * FROM `menu` WHERE `category_id`=1', function(error,results){
+        'SELECT * FROM `menu` WHERE `country_id`=?',req.params.id, function(error,results){
             // console.log(results)
         if(error) throw error;
         res.json(results);
         // console.log(req.params.id)
       })
+})
+
+router.route('/occasion/:id')
+.get(function(req, res){
+    //GET http://localhost:3000/api/occasion/:id  
+    // 讀取:id參數的值 req.params.id
+    // res.send("get recipe id " + req.params.id);
+    // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
+    connection.query(
+        'SELECT * FROM `menu` WHERE `occasion_id`=?',req.params.id, function(error,results){
+            // console.log(results)
+        if(error) throw error;
+        res.json(results);
+        // console.log(req.params.id)
+      })
+})
+
+router.route('/serving/:id')
+.get(function(req, res){
+    //GET http://localhost:3000/api/serving/:id  
+    // 讀取:id參數的值 req.params.id
+    // res.send("get recipe id " + req.params.id);
+    // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
+    connection.query(
+        'SELECT * FROM `menu` WHERE `serving_id`=?',req.params.id, function(error,results){
+            // console.log(results)
+        if(error) throw error;
+        res.json(results);
+        // console.log(req.params.id)
+      })
+})
+
+router.route('/difficult/:id')
+.get(function(req, res){
+    //GET http://localhost:3000/api/difficult/:id  
+    // 讀取:id參數的值 req.params.id
+    // res.send("get recipe id " + req.params.id);
+    // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
+    connection.query(
+        'SELECT * FROM `menu` WHERE `difficult_id`=?',req.params.id, function(error,results){
+            // console.log(results)
+        if(error) throw error;
+        res.json(results);
+        // console.log(req.params.id)
+      })
+})
+router.route('/time/:id')
+.get(function(req, res){
+    //GET http://localhost:3000/api/time/:id  
+    // 讀取:id參數的值 req.params.id
+    // res.send("get recipe id " + req.params.id);
+    // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
+    connection.query(
+        'SELECT * FROM `menu` WHERE `time_id`=?',req.params.id, function(error,results){
+            // console.log(results)
+        if(error) throw error;
+        res.json(results);
+        // console.log(req.params.id)
+      })
+})
+
+// 大分類
+router.route('/category/:id')
+.get(function(req, res){
+    //GET http://localhost:3000/api/category/1  
+    // 讀取:id參數的值 req.params.id
+    // res.send("get recipe id " + req.params.id);
+    connection.query(
+        'SELECT * FROM `category`',function(error,results){
+            // console.log(results)
+        if(error) throw error;
+        res.json(results)
+        
+      })
+
 })
 // how do i read different column when i have variable category id?
 //  xxxFAILxxx 1. we can't write variables into SQL query  
