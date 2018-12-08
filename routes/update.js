@@ -7,8 +7,7 @@ var connection = mysql.createConnection({
     user:'foodtopia',
     password:'',
     database:'foodtopia',
-  port: 3306
-  //資料庫名稱
+    port: 3306
 });
 
 connection.connect(function(err) {
@@ -23,13 +22,13 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("SELECT * FROM menu ORDER BY `id` DESC LIMIT 6", function(error, results) {
+    connection.query("SELECT * FROM `menu` LIMIT 6", function(error, results) {
       if (error) throw error;
       res.json(results);
     });
   });
 
-//menu單筆資料
+//食譜內容頁單筆資料
 router
 .route("/menu/:id")
 .get(function(req, res) {

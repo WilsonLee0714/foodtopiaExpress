@@ -26,11 +26,12 @@ router
       if (error) throw error;
       res.json(rows);
     });
-  });
+});
 
-  router
+router
   .route("/menu/:page")
   .get(function (req, res) {
+    console.log(req.session.sid)
     //先統計總共幾筆資料
     var query = "select count(*) as TotalCount from menu"; //用SQL找總共多少筆
     var totalCount = 0;
@@ -50,9 +51,18 @@ router
       query = mysql.format(query, params); //format -> 將query取得的項目轉化成params格式
       connection.query(query, function (error, row) {
         if (error) throw error;
-        res.json({ "TotalCount": totalCount, "datas": row });
+        res.json({ TotalCount: totalCount, datas: row });
       });
     });
   })
+//食譜內容頁-食材
+router
+  .route("/ingredients/:sid")
+  .get(function(req, res) {
+    connection.query("Select * from ingredients WHERE `sid`=?",req.params.sid,function(error, rows) {
+      if (error) throw error;
+      res.json(rows);
+    });
+});
 
 module.exports = router;

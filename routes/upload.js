@@ -18,16 +18,15 @@ connection.connect(function(err) {
     }
     console.log("connected as id " + connection.threadId);
 });
-
+//月份篩選
 router
-  .route("/upload_date") //資料表名稱
+  .route("/upload_date") 
   .get(function(req, res) {
     connection.query("SELECT * FROM upload_date ORDER BY `id` DESC ", function(error, results) {
       if (error) throw error;
       res.json(results);
     });
   });
-
 router
 .route("/upload_date/:id") 
 .get(function(req, res) {
@@ -37,5 +36,22 @@ router
   });
 });
 
+//上傳食材篩選
+router
+  .route("/upload_ingredients_name")
+  .get(function(req, res) {
+    connection.query("SELECT * FROM upload_ingredients_name", function(error, results) {
+      if (error) throw error;
+      res.json(results);
+    });
+  });
+router
+.route("/upload_ingredients/:sid") 
+.get(function(req, res) {
+  connection.query("SELECT * FROM upload_ingredients WHERE `sid`=?",req.params.sid, function(error, results) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
 
 module.exports = router;

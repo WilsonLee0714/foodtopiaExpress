@@ -38,55 +38,63 @@ router.post('/upload',upload.single('image'),function(req,res,next){
   res.send(req.file);
 })
 
+//讀取blog個人資料
 router
-  .route("/upload_name")
-  .get(function(req, res) {//讀所有資料
-    connection.query("SELECT * FROM community ORDER BY `id` DESC LIMIT 1",function(error,rows){
+  .route("/upload_community")
+  .get(function(req, res) {
+    connection.query("SELECT * FROM community where `sid`=?",[req.session.sid],function(error,rows){
       if (error) throw error;
       res.json(rows);
     })
-  }) 
-  .post(function(req, res) {//新增資料
-     var _user = req.body;
-    connection.query("insert into community set ?", _user,function(error){
+  })
+  // connection.query("SELECT * FROM community where `sid`=?", [req.session.sid], function (error, rows) {
+  //   if (rows) {
+  //     connection.query("insert into community set ?", { img_name: "Tifa", welcome: "請設定部落格歡迎用語", introduction: "請設定部落格簡介", sid: req.session.sid }, function (error) {
+  //       if (error) throw error;
+  //     })
+  //   } else {
+  //       res.json(rows);
+  //     }
+  // })
+
+//上傳檔名
+router
+  .route("/upload_img_name") 
+  .put(function(req, res) {//修改圖片
+     var _body = req.body;
+    connection.query("UPDATE community SET img_name=? WHERE sid=?",[_body.img_name, req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    }) 
+  });
+//welcome修改
+router
+  .route("/upload_welcome")
+  .put(function(req, res) {//修改welcome
+     var _body = req.body;
+    connection.query("UPDATE community SET welcome=? WHERE sid=?",[_body.welcome, req.session.sid],function(error){
        if (error) throw error;
        res.json({ message: "新增成功" });
     })
-  }); 
-
-// //新增圖片
-// router
-//   .route("/upload_name")
-//   .get(function(req, res) {//讀所有資料
-//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id`",function(error,rows){
-//       if (error) throw error;
-//       res.json(rows);
-//     })
-//   }) 
-//   .post(function(req, res) {
-//      var _user = req.body;
-//     connection.query("insert into community set ?", _user,function(error){
-//        if (error) throw error;
-//        res.json({ message: "新增成功" });
-//     })
-//   }); 
-// //修改圖片檔名
-//   router
-//   .route("/upload_name/:sid")
-//   .get(function(req, res) {
-//     connection.query("SELECT `members`.*, `community`.* FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` where sid=?", req.params.sid,function(error,row){
-//       if(error) throw error;
-//       res.json(row);
-//     });
-//   }) 
-//   .put(function(req, res) {
-//        var _member = req.body;  
-//        var id = req.params.id;
-//        connection.query("update `members`, `community` FROM `members` JOIN `community` ON `members`.`sid`=`community`.`id` set ? where sid=?",[_member, id],function(error){
-//           if(error) throw error;
-//           res.json({ message: "修改成功" });
-//        })
-
-//   }) 
-
+});
+//introduction修改
+router
+  .route("/upload_introduction")
+  .put(function(req, res) {//修改introduction
+     var _body = req.body;
+    connection.query("UPDATE community SET introduction=? WHERE sid=?",[_body.introduction, req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    })
+});
+//社群修改
+router
+  .route("/upload_community")
+  .put(function(req, res) {//社群修改
+     var _body = req.body;
+    connection.query("UPDATE `community` SET `facebook`=?,`instagram`=?,`google_plus`=?,`youtube`=? WHERE sid=?",[_body.facebook,_body.instagram,_body.google_plus,_body.youtube,req.session.sid],function(error){
+       if (error) throw error;
+       res.json({ message: "新增成功" });
+    })
+});
 module.exports = router;
