@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
 var cors = require('cors');
 var multer = require('multer');
@@ -32,17 +33,10 @@ app.use(cors({
   credentials: true,
   Headers:"Origin, X-Requested-With, Content-Type, Accept"
 }));
-var session = require('express-session');
 app.use(session({
   secret: "123456",
   name: "session"
 }));
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3001/");
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -95,22 +89,7 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
 })
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-//ming
-app.use('/foodtopia', foodtopiaRouter);
-app.use('/update', updateRouter);
-app.use('/upload', uploadRouter);
-app.use('/month', monthRouter);
-app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
-app.use('/talk', talkRouter);
-//yvn
-app.use('/api', recipeRouter);
-//session
 
-app.use('/users', usersRouter);
-app.use('/api', membersRouter);
-app.use('/session', sessionRouter);
-app.use('/cart', cartRouter);
-app.use('/order', orderRouter)
 //brain
 app.use('/api', ingredientsRouter);
 //ming
@@ -121,7 +100,11 @@ app.use('/month', monthRouter);
 app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
 app.use('/talk', talkRouter);
 //yvn
-app.use('/api', recipeRouter);
+app.use('/api', recipeRouter);;
+app.use('/api', membersRouter);
+app.use('/session', sessionRouter);
+app.use('/cart', cartRouter);
+app.use('/order', orderRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
