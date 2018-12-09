@@ -14,7 +14,7 @@ var updateRouter = require('./routes/update');
 var uploadRouter = require('./routes/upload');
 var monthRouter = require('./routes/month');
 var imgupRouter = require('./routes/imgup');
-var talkRouter = require('./routes/talk');
+var loveRouter = require('./routes/love');
 //yvn
 var recipeRouter = require('./routes/recipe');
 var recipeListRouter = require('./routes/recipe_list');
@@ -110,7 +110,7 @@ app.use('/update', updateRouter);
 app.use('/upload', uploadRouter);
 app.use('/month', monthRouter);
 app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
-app.use('/talk', talkRouter);
+app.use('/love', loveRouter);
 //yvn
 app.use('/api', recipeRouter);
 app.use('/api', recipeListRouter);
