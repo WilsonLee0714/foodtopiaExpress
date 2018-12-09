@@ -17,6 +17,7 @@ var imgupRouter = require('./routes/imgup');
 var talkRouter = require('./routes/talk');
 //yvn
 var recipeRouter = require('./routes/recipe');
+var recipeListRouter = require('./routes/recipe_list');
 //wilson
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
@@ -67,7 +68,7 @@ var connection = mysql.createConnection({
   user: 'foodtopia',
   password: '',
   database: 'foodtopia',
-  port: 3306
+  // port: 3306
 });
 var fs = require("fs");
 var multer = require('multer');
@@ -112,6 +113,7 @@ app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供
 app.use('/talk', talkRouter);
 //yvn
 app.use('/api', recipeRouter);
+app.use('/api', recipeListRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

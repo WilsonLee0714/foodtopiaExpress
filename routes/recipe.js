@@ -8,15 +8,15 @@ var connection = mysql.createConnection({
   user     : 'foodtopia',
   password : '',
   database : 'foodtopia',
-  port: 3306
+//   port: 3306
 
 });
 connection.connect();
 
-// http://localhost:3000/xxx/recipe
+// http://localhost:3000/api/recipe
 router.route('/recipe')
     .get(function(req, res){
-        //GET http://localhost:3000/xxx/recipe
+        // GET http://localhost:3000/xxx/recipe
         // res.send("get all recipe")
         connection.query("select * from menu ", function(error, results) {
             if(error) throw error;
@@ -31,7 +31,7 @@ router.route('/recipe')
 
 // http://localhost:3000/api/recipe/1
 router.route('/recipe/:id')
-.get(function(req, res){
+.get(function(req, res){ 
     //GET http://localhost:3000/api/recipe/2  
     // 讀取:id參數的值 req.params.id
     // res.send("get recipe id " + req.params.id);
