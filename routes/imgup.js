@@ -47,15 +47,6 @@ router
       res.json(rows);
     })
   })
-  // connection.query("SELECT * FROM community where `sid`=?", [req.session.sid], function (error, rows) {
-  //   if (rows) {
-  //     connection.query("insert into community set ?", { img_name: "Tifa", welcome: "請設定部落格歡迎用語", introduction: "請設定部落格簡介", sid: req.session.sid }, function (error) {
-  //       if (error) throw error;
-  //     })
-  //   } else {
-  //       res.json(rows);
-  //     }
-  // })
 
 //上傳檔名
 router

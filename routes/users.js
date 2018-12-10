@@ -82,34 +82,18 @@ router
       if (error) throw error;
       res.send(rows);
     })
+  });
+router
+  .route("/orderDetail")
+  .get(function (req, res) {//取訂單詳細資料
+    var order_num = req.query.order_num;
+    connection.query("SELECT * FROM `orders_details` WHERE order_num = ?", [order_num], function (error, rows) {
+      if (error) throw error;
+      res.send(rows);
+      console.log(rows)
+    })
   })
 
-
-
-
-//   .get(function (req, res) {//登入資料取得
-//   // req.session.user = 9;
-//   if (req.session.user) {
-//     var user = req.session.user;
-//     // var email=user.email;
-//     res.json(user);
-//   } else {
-//     res.send('未登入！');
-//   }
-// });
-// router
-//   .route("/loginInfo")
-//   .post(function (req, res) {//登入資料取得
-//     req.session.user = 9;
-
-//     if (req.session.user) {
-//       var user = req.session.user;
-//       // var email=user.email;
-//       res.json(user);
-//     } else {
-//       res.send('你还没有登录，先登录下再试试！');
-//     }
-//   });
 
 
 module.exports = router;
