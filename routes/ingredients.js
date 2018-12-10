@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
   database: "foodtopia",
   user: "foodtopia",
   password: "",
-  port: 3306
+  // port: 3306
 
 });
 connection.connect();

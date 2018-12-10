@@ -28,7 +28,7 @@ router
     });
 });
 
-  router
+router
   .route("/menu/:page")
   .get(function (req, res) {
     console.log(req.session.sid)

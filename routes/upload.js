@@ -22,7 +22,7 @@ connection.connect(function(err) {
 router
   .route("/upload_date") 
   .get(function(req, res) {
-    connection.query("SELECT * FROM upload_date ORDER BY `id` DESC ", function(error, results) {
+    connection.query("SELECT * FROM upload_date ORDER BY `id` DESC LIMIT 4", function(error, results) {
       if (error) throw error;
       res.json(results);
     });

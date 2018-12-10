@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
     user: 'foodtopia',
     password: '',
     database: 'foodtopia',
-    port: 3306
+    // port: 3306
 });
 // connection.connect();
 connection.connect(function (err) {
@@ -60,6 +60,16 @@ router
                     req.session.login = 1;
                     res.redirect('http://localhost:3001/memberCenter/basicInfo');
                     // res.send(req.session);
+                    
+                    //登入會員時候新增blog表單資料
+                    connection.query("SELECT * FROM community where `sid`=?", [req.session.sid], function (error, rows) {
+                        if (!rows.length) {
+                          connection.query("insert into community set ?", { img_name: "Tifa.jpg", welcome: "請設定部落格歡迎用語", introduction: "請設定部落格簡介", sid: req.session.sid }, function (error) {
+                            if (error) throw error;
+                          })
+                        }
+                    })
+                    
                 } else {
                     res.redirect('http://localhost:3001/login');
                 }
