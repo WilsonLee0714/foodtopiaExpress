@@ -72,7 +72,7 @@ router
   .route("/comment_upload")
     .post(function(req, res) {//發表評論
         var _body = req.body;
-        connection.query("INSERT INTO `comment`(`comment`, `recipe_id`, `members_id`, `comment_name`) VALUES (?,?,?,?)",[_body.comment,_body.recipe_id,req.session.sid,req.session.nickname],function(error){
+        connection.query("INSERT INTO `comment`(`comment`, `recipe_id`, `members_id`, `comment_name`, `profile`) VALUES (?,?,?,?,?)",[_body.comment,_body.recipe_id,req.session.sid,req.session.nickname,req.session.profile],function(error){
         if (error) throw error;
         res.json({ message: "新增成功" });
         })
