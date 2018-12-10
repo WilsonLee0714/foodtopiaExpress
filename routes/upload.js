@@ -54,4 +54,36 @@ router
   });
 });
 
+//上傳食譜
+router
+  .route("/upload_menu_total")
+  .post(function(req, res) {
+      var _body = req.body;
+      connection.query("insert into menu set ?",_body,function(error){
+      if (error) throw error;
+      res.json({ message: "上傳食譜成功" });
+      })
+  })
+  .post(function(req, res) {
+    var _body = req.body;
+    connection.query("insert into ingredients_name set ?",_body,function(error){
+    if (error) throw error;
+    res.json({ message: "新增成功" });
+    })
+  })
+  .post(function(req, res) {
+    var _body = req.body;
+    connection.query("insert into step set ?",_body,function(error){
+    if (error) throw error;
+    res.json({ message: "新增成功" });
+    })
+  })
+  .post(function(req, res) {
+    var _body = req.body;
+    connection.query("insert into step_img set ?",_body,function(error){
+    if (error) throw error;
+    res.json({ message: "新增成功" });
+    })
+  })
+
 module.exports = router;
