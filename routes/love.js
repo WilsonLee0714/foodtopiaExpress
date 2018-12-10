@@ -64,13 +64,13 @@ router
   //         if (error) throw error;
   //         res.json({ message: "新增成功" });
   //      })
-  //     }else if(res.rows==1){
-  //      connection.query("INSERT INTO love set ?",{member_id:req.session.sid,recipe_id:_body.recipe_id,love=2},function(error){
+  //     }else if(rows[0].love==1){
+  //      connection.query("UPDATE love set `member_id`=?,`recipe_id`=?,`love`=?",{member_id:req.session.sid,recipe_id:_body.recipe_id,love=2},function(error){
   //         if (error) throw error;
   //         res.json({ message: "取消收藏" });
   //      })
-  //     }else {
-  //      connection.query("INSERT INTO love set ?",{member_id:req.session.sid,recipe_id:_body.recipe_id,love=1},function(error){
+  //     }else if(rows[0].love==2){
+  //      connection.query("UPDATE love set ?",{member_id:req.session.sid,recipe_id:_body.recipe_id,love=1},function(error){
   //         if (error) throw error;
   //         res.json({ message: "加入收藏" });
   //      })
