@@ -107,7 +107,13 @@ app.use('/api', ingredientsRouter);
 //ming
 app.use('/foodtopia', foodtopiaRouter);
 app.use('/update', updateRouter);
-app.use('/upload', uploadRouter);
+app.use('/upload', uploadRouter,express.static("public/upload_recipes"),
+                                express.static("public/upload_recipes1"),
+                                express.static("public/upload_recipes2"),
+                                express.static("public/upload_recipes3"),
+                                express.static("public/upload_recipes4"),
+                                express.static("public/upload_recipes5"),
+                                express.static("public/upload_recipes6"));
 app.use('/month', monthRouter);
 app.use('/imgup', imgupRouter, express.static("public/uploads")); //靜態提供public->uploads檔案
 app.use('/love', loveRouter);
