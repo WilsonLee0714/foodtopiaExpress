@@ -32,7 +32,7 @@ router
 router
 .route("/menu/:id")
 .get(function(req, res) {
-  connection.query("select * from `menu` WHERE `id`=?", req.params.id,function(error,row){
+  connection.query("select * from `menu01` WHERE `id`=?", req.params.id,function(error,row){
     if(error) throw error;
     res.json(row);
   });

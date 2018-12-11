@@ -62,19 +62,43 @@ router
       var _body = req.body;
       connection.query("INSERT INTO `menu01`(`menu`,`menu_img`,`Introduction`,`difficult`,`time`,`serving`,`member_id`) VALUES (?,?,?,?,?,?,?)",[_body.menu,_body.menu_img,_body.Introduction,_body.difficult,_body.time,_body.serving,req.session.sid],function(error){
         if (error) throw error;
-        connection.query("INSERT INTO `step`(`step_1`,`step_2`,`step_3`,`step_4`,`step_5`,`step_6`) VALUES (?,?,?,?,?,?)",[_body.step_1,_body.step_2,_body.step_3,_body.step_4,_body.step_5,_body.step_6],function(error){
+        connection.query("SELECT `id` FROM `menu01` ORDER BY `id` DESC LIMIT 1",function(error,rows){
+          // res.json(rows);
           if (error) throw error;
-          connection.query("INSERT INTO `step_img`(`step_img_1`,`step_img_2`,`step_img_3`,`step_img_4`,`step_img_5`,`step_img_6`) VALUES (?,?,?,?,?,?)",[_body.step_img_1,_body.step_img_2,_body.step_img_3,_body.step_img_4,_body.step_img_5,_body.step_img_6],function(error){
+          connection.query("INSERT INTO `ingredients_name`(`id`,`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6],function(error){
             if (error) throw error;
-            connection.query("INSERT INTO `ingredients_name`(`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`) VALUES (?,?,?,?,?,?)",[_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6],function(error){
+            connection.query("INSERT INTO `step_img`(`id`,`step_img_1`,`step_img_2`,`step_img_3`,`step_img_4`,`step_img_5`,`step_img_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.step_img_1,_body.step_img_2,_body.step_img_3,_body.step_img_4,_body.step_img_5,_body.step_img_6],function(error){
               if (error) throw error;
-              res.json({ message: "上傳食譜成功" });
+              connection.query("INSERT INTO `step`(`id`,`step_1`,`step_2`,`step_3`,`step_4`,`step_5`,`step_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.step_1,_body.step_2,_body.step_3,_body.step_4,_body.step_5,_body.step_6],function(error){
+                if (error) throw error;
+                connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar1,_body.name_1,_body.dataCar1],function(error){
+                  if (error) throw error;
+                  connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar2,_body.name_2,_body.dataCar2],function(error){
+                    if (error) throw error;
+                    connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar3,_body.name_3,_body.dataCar3],function(error){
+                      if (error) throw error;
+                      connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar4,_body.name_4,_body.dataCar4],function(error){
+                        if (error) throw error;
+                        connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar5,_body.name_5,_body.dataCar5],function(error){
+                          if (error) throw error;
+                          connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar6,_body.name_6,_body.dataCar6],function(error){
+                            if (error) throw error;
+                            connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar7,_body.name_7,_body.dataCar7],function(error){
+                              if (error) throw error;
+                              res.json({ message: "上傳食譜成功" });
+                            })
+                          })
+                        })
+                      })
+                    })
+                  })
+                })
+              })
             })
           })
         })
       })
-     
-})
+    })
 
 //設定上傳檔案的資料夾
 var storage = multer.diskStorage({
