@@ -49,7 +49,7 @@ router
   router
   .route("/love_m")
   .get(function(req, res) {
-    connection.query("SELECT `menu`.*, `love`.`recipe_id` FROM `love` JOIN `menu` ON `menu`.`id`=`love`.`recipe_id` where `love`.`member_id`=?",[req.session.sid],function(error,rows){
+    connection.query("SELECT `menu01`.*, `love`.`recipe_id` FROM `love` JOIN `menu01` ON `menu01`.`id`=`love`.`recipe_id` where `love`.`member_id`=?",[req.session.sid],function(error,rows){
       if (error) throw error;
       res.json(rows);
     })
