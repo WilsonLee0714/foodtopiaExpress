@@ -63,7 +63,6 @@ router
       connection.query("INSERT INTO `menu01`(`menu`,`menu_img`,`Introduction`,`difficult`,`time`,`serving`,`member_id`) VALUES (?,?,?,?,?,?,?)",[_body.menu,_body.menu_img,_body.Introduction,_body.difficult,_body.time,_body.serving,req.session.sid],function(error){
         if (error) throw error;
         connection.query("SELECT `id` FROM `menu01` ORDER BY `id` DESC LIMIT 1",function(error,rows){
-          // res.json(rows);
           if (error) throw error;
           connection.query("INSERT INTO `ingredients_name`(`id`,`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6],function(error){
             if (error) throw error;
