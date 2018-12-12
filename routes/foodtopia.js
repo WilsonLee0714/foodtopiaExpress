@@ -27,7 +27,7 @@ router
       res.json(rows);
     });
 });
-
+//menu全部食譜
 router
   .route("/menu/:page")
   .get(function (req, res) {
@@ -55,6 +55,15 @@ router
       });
     });
   })
+//menu依照會員抓上傳食譜
+router
+  .route("/member_menu/:sid")
+  .get(function(req, res) {
+    connection.query("Select * from menu WHERE `member_id`=?",req.params.sid,function(error, rows) {
+      if (error) throw error;
+      res.json(rows);
+    });
+});
 //食譜內容頁-食材
 router
   .route("/ingredients/:sid")

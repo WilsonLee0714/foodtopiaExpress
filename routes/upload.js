@@ -63,7 +63,6 @@ router
       connection.query("INSERT INTO `menu01`(`menu`,`menu_img`,`Introduction`,`difficult`,`time`,`serving`,`member_id`) VALUES (?,?,?,?,?,?,?)",[_body.menu,_body.menu_img,_body.Introduction,_body.difficult,_body.time,_body.serving,req.session.sid],function(error){
         if (error) throw error;
         connection.query("SELECT `id` FROM `menu01` ORDER BY `id` DESC LIMIT 1",function(error,rows){
-          // res.json(rows);
           if (error) throw error;
           connection.query("INSERT INTO `ingredients_name`(`id`,`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6],function(error){
             if (error) throw error;
@@ -111,7 +110,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage1 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes1/')
   },
@@ -119,9 +118,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload1 = multer({ storage: storage })
+var upload1 = multer({ storage: storage1 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage2 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes2/')
   },
@@ -129,9 +128,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload2 = multer({ storage: storage })
+var upload2 = multer({ storage: storage2 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage3 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes3/')
   },
@@ -139,9 +138,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload3 = multer({ storage: storage })
+var upload3 = multer({ storage: storage3 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage4 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes4/')
   },
@@ -149,9 +148,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload4 = multer({ storage: storage })
+var upload4 = multer({ storage: storage4 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage5 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes5/')
   },
@@ -159,9 +158,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload5 = multer({ storage: storage })
+var upload5 = multer({ storage: storage5 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage6 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes6/')
   },
@@ -169,7 +168,7 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload6 = multer({ storage: storage })
+var upload6 = multer({ storage: storage6 })
 // ---------------------------------------
 //上傳圖片
 router.post('/upload',upload.single('image'),function(req,res,next){
