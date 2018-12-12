@@ -136,95 +136,24 @@ router
                                     message: '新增成功'
                                 });
                             })
+                    } else {
+                        let newQty = row[0].qty + 1,
+                            sid = row[0].sid
+                        connection.query(
+                            "UPDATE cart " +
+                            "SET qty=? " +
+                            "WHERE sid=?", [newQty, sid],
+                            function (err) {
+                                if (err)
+                                    throw (err);
+                                res.json({
+                                    message: '新增成功'
+                                });
+                            })
                     }
                 });
         }
     });
-
-// router
-//     .route('/allAddCart')
-//     //食譜一鍵加入購物車
-//     .post(function (req, res) {
-//         var products = req.body.products,
-//             commitNum = 0
-//         connection.beginTransaction(function (err) {
-//             if (err) {
-//                 throw err;
-//             }
-//             for (i = 0; i < products.length; i++) {
-//                 let product_id = products[i].ingredients_id;
-
-//                 connection.query(
-//                     "SELECT sid, qty " +
-//                     "FROM cart " +
-//                     "WHERE member_sid=? AND product_id=?", [req.session.sid, product_id],
-//                     function (err, row) {
-//                         if (err) {
-//                             connection.rollback(function () {
-//                                 throw err;
-//                             });
-//                         }
-//                         if (!row.length) {
-//                             connection.query(
-//                                 "INSERT INTO cart (member_sid, product_id) " +
-//                                 "VALUES (?,?)", [req.session.sid, product_id],
-//                                 function (err) {
-//                                     if (err) {
-//                                         connection.rollback(function () {
-//                                             throw err;
-//                                         });
-//                                     } else {
-//                                         commitNum += 1
-//                                         if (commitNum == products.length) {
-//                                             connection.commit(function (err) {
-//                                                 if (err) {
-//                                                     connection.rollback(function () {
-//                                                         throw err;
-//                                                     });
-//                                                 }
-//                                                 connection.end();
-//                                             });
-//                                             res.json({
-//                                                 message: '新增成功'
-//                                             });
-//                                         }
-//                                     }
-//                                 })
-//                         } else {
-//                             let newQty = row[0].qty + 1,
-//                                 sid = row[0].sid
-//                             connection.query(
-//                                 "UPDATE cart " +
-//                                 "SET qty=? " +
-//                                 "WHERE sid=?", [newQty, sid],
-//                                 function (err) {
-//                                     if (err) {
-//                                         connection.rollback(function () {
-//                                             throw err;
-//                                         });
-//                                     } else {
-//                                         commitNum += 1
-//                                         if (commitNum == products.length) {
-//                                             connection.commit(function (err) {
-//                                                 if (err) {
-//                                                     connection.rollback(function () {
-//                                                         throw err;
-//                                                     });
-//                                                 }
-//                                                 connection.end();
-//                                             });
-//                                             res.json({
-//                                                 message: '新增成功'
-//                                             });
-//                                         }
-//                                     }
-//                                 })
-//                         }
-//                     });
-//             }
-//         });
-//     });
-
 
 router
     .route('/allAddCart')
@@ -235,29 +164,47 @@ router
                 message: '未登入'
             });
         } else {
-        return new Promise((resolve, reject) => {
-                let products = req.body.products,
-                    addNum = 0;
+            var products = req.body.products,
+                commitNum = 0
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    throw err;
+                }
                 for (i = 0; i < products.length; i++) {
-                    let product_id = products[i].ingredients_id
+                    let product_id = products[i].ingredients_id;
+
                     connection.query(
                         "SELECT sid, qty " +
                         "FROM cart " +
                         "WHERE member_sid=? AND product_id=?", [req.session.sid, product_id],
                         function (err, row) {
-                            if (err)
-                                throw err;
+                            if (err) {
+                                connection.rollback(function () {
+                                    throw err;
+                                });
+                            }
                             if (!row.length) {
                                 connection.query(
                                     "INSERT INTO cart (member_sid, product_id) " +
                                     "VALUES (?,?)", [req.session.sid, product_id],
                                     function (err) {
-                                        if (err)
-                                            reject(err);
-                                        else {
-                                            addNum += 1;
-                                            if (addNum = products.length) {
-                                                resolve();
+                                        if (err) {
+                                            connection.rollback(function () {
+                                                throw err;
+                                            });
+                                        } else {
+                                            commitNum += 1
+                                            if (commitNum == products.length) {
+                                                connection.commit(function (err) {
+                                                    if (err) {
+                                                        connection.rollback(function () {
+                                                            throw err;
+                                                        });
+                                                    }
+                                                    res.json({
+                                                        message: '新增成功'
+                                                    });
+                                                });
                                             }
                                         }
                                     })
@@ -269,31 +216,102 @@ router
                                     "SET qty=? " +
                                     "WHERE sid=?", [newQty, sid],
                                     function (err) {
-                                        if (err)
-                                            reject(err);
-                                        else {
-                                            addNum += 1;
-                                            if (addNum = products.length) {
-                                                resolve();
+                                        if (err) {
+                                            connection.rollback(function () {
+                                                throw err;
+                                            });
+                                        } else {
+                                            commitNum += 1
+                                            if (commitNum == products.length) {
+                                                connection.commit(function (err) {
+                                                    if (err) {
+                                                        connection.rollback(function () {
+                                                            throw err;
+                                                        });
+                                                    }
+                                                    res.json({
+                                                        message: '新增成功'
+                                                    });
+                                                });
                                             }
                                         }
                                     })
                             }
                         });
                 }
-            })
-            .then(() => {
-                res.json({
-                    message: '新增成功'
-                });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    message: '新增失敗'
-                });
             });
         }
     });
+
+
+// router
+//     .route('/allAddCart')
+//     //食譜一鍵加入購物車
+//     .post(function (req, res) {
+//         if (req.session.login !== 1) {
+//             res.json({
+//                 message: '未登入'
+//             });
+//         } else {
+//         return new Promise((resolve, reject) => {
+//                 let products = req.body.products,
+//                     addNum = 0;
+//                 for (i = 0; i < products.length; i++) {
+//                     let product_id = products[i].ingredients_id
+//                     connection.query(
+//                         "SELECT sid, qty " +
+//                         "FROM cart " +
+//                         "WHERE member_sid=? AND product_id=?", [req.session.sid, product_id],
+//                         function (err, row) {
+//                             if (err)
+//                                 throw err;
+//                             if (!row.length) {
+//                                 connection.query(
+//                                     "INSERT INTO cart (member_sid, product_id) " +
+//                                     "VALUES (?,?)", [req.session.sid, product_id],
+//                                     function (err) {
+//                                         if (err)
+//                                             reject(err);
+//                                         else {
+//                                             addNum += 1;
+//                                             if (addNum = products.length) {
+//                                                 resolve();
+//                                             }
+//                                         }
+//                                     })
+//                             } else {
+//                                 let newQty = row[0].qty + 1,
+//                                     sid = row[0].sid
+//                                 connection.query(
+//                                     "UPDATE cart " +
+//                                     "SET qty=? " +
+//                                     "WHERE sid=?", [newQty, sid],
+//                                     function (err) {
+//                                         if (err)
+//                                             reject(err);
+//                                         else {
+//                                             addNum += 1;
+//                                             if (addNum = products.length) {
+//                                                 resolve();
+//                                             }
+//                                         }
+//                                     })
+//                             }
+//                         });
+//                 }
+//             })
+//             .then(() => {
+//                 res.json({
+//                     message: '新增成功'
+//                 });
+//             })
+//             .catch(err => {
+//                 res.status(500).json({
+//                     message: '新增失敗'
+//                 });
+//             });
+//         }
+//     });
 
 
 module.exports = router;
