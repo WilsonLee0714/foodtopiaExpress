@@ -110,7 +110,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage1 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes1/')
   },
@@ -118,9 +118,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload1 = multer({ storage: storage })
+var upload1 = multer({ storage: storage1 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage2 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes2/')
   },
@@ -128,9 +128,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload2 = multer({ storage: storage })
+var upload2 = multer({ storage: storage2 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage3 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes3/')
   },
@@ -138,9 +138,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload3 = multer({ storage: storage })
+var upload3 = multer({ storage: storage3 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage4 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes4/')
   },
@@ -148,9 +148,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload4 = multer({ storage: storage })
+var upload4 = multer({ storage: storage4 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage5 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes5/')
   },
@@ -158,9 +158,9 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload5 = multer({ storage: storage })
+var upload5 = multer({ storage: storage5 })
 // ---------------------------------------
-var storage = multer.diskStorage({
+var storage6 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/upload_recipes6/')
   },
@@ -168,7 +168,7 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-var upload6 = multer({ storage: storage })
+var upload6 = multer({ storage: storage6 })
 // ---------------------------------------
 //上傳圖片
 router.post('/upload',upload.single('image'),function(req,res,next){
