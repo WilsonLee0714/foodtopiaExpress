@@ -22,7 +22,7 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("Select * from menu", function(error, rows) {
+    connection.query("Select * from `menu01` WHERE `member_id`=? ORDER BY `id` DESC",[req.session.sid], function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
@@ -32,7 +32,7 @@ router
 router
 .route("/menu/:upload_time_sid")
 .get(function(req, res) {
-  connection.query("select * from `menu` WHERE `upload_time_sid`=?",req.params.upload_time_sid, function(error, rows) {
+  connection.query("select * from `menu01` WHERE `upload_time_sid`=?",req.params.upload_time_sid, function(error, rows) {
     if (error) throw error;
     res.json(rows);
   });

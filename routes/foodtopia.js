@@ -22,7 +22,7 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("Select * from menu", function(error, rows) {
+    connection.query("Select * from menu01", function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
@@ -31,11 +31,10 @@ router
 router
   .route("/menu/:page")
   .get(function (req, res) {
-    console.log(req.session.sid)
     //先統計總共幾筆資料
-    var query = "select count(*) as TotalCount from menu"; //用SQL找總共多少筆
+    var query = "select count(*) as TotalCount from menu01 WHERE `member_id`=?"; //用SQL找總共多少筆
     var totalCount = 0;
-    connection.query(query, function (error, row) {
+    connection.query(query,[req.session.sid], function (error, row) {
       if (error) throw error;
       totalCount = row[0].TotalCount;
 
@@ -46,8 +45,8 @@ router
         page = parseInt(req.params.page); //parseInt化
         startNum = (page - 1) * LimitNum; //依據頁數讀取第一筆的項目id
       }
-      var query = "select * from `menu` limit ? OFFSET ?"; //每頁項目範圍
-      var params = [LimitNum, startNum];
+      var query = "select * from `menu01` WHERE `member_id`=? ORDER BY `id` DESC limit ? OFFSET ? "; //每頁項目範圍
+      var params = [req.session.sid,LimitNum, startNum];
       query = mysql.format(query, params); //format -> 將query取得的項目轉化成params格式
       connection.query(query, function (error, row) {
         if (error) throw error;
@@ -59,7 +58,7 @@ router
 router
   .route("/member_menu/:sid")
   .get(function(req, res) {
-    connection.query("Select * from menu WHERE `member_id`=?",req.params.sid,function(error, rows) {
+    connection.query("Select * from menu01 WHERE `member_id`=?",req.params.sid,function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
@@ -73,5 +72,14 @@ router
       res.json(rows);
     });
 });
+//部落格評論篩選
+router
+  .route("/member_comment")
+    .get(function(req, res) {
+    connection.query("SELECT `menu01`.`member_id`,`menu01`.`menu`, `comment`.* FROM `comment` JOIN `menu01` ON `menu01`.`id`=`comment`.`recipe_id`  WHERE `menu01`.`member_id`=? ORDER BY `id` DESC LIMIT 4",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+})
 
 module.exports = router;

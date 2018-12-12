@@ -22,7 +22,7 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("SELECT * FROM `menu` LIMIT 4", function(error, results) {
+    connection.query("SELECT * FROM `menu01` LIMIT 4", function(error, results) {
       if (error) throw error;
       res.json(results);
     });
