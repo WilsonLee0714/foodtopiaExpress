@@ -47,7 +47,15 @@ router
       res.json(rows);
     })
   })
-
+//讀取其他會員blog
+router
+  .route("/upload_community/:sid")
+  .get(function(req, res) {
+    connection.query("SELECT * FROM community where `sid`=?",req.params.sid,function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+  })
 //上傳檔名
 router
   .route("/upload_img_name") 
