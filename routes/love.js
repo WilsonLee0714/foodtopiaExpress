@@ -35,7 +35,7 @@ router
       if(!rows.length){
         connection.query("INSERT INTO love set ?",{member_id:req.session.sid,recipe_id:_body.recipe_id},function(error){
           if (error) throw error;
-          res.json({ message: "新增成功" });
+          res.json({ message: "收藏成功" });
        })
       }else{
         connection.query("DELETE FROM `love` WHERE `member_id`=? AND `recipe_id`=?",[req.session.sid,_body.recipe_id],function(error){
