@@ -60,7 +60,7 @@ router
   .route("/upload_menu_total")
   .post(function(req, res) {
       var _body = req.body;
-      connection.query("INSERT INTO `menu01`(`menu`,`menu_img`,`Introduction`,`difficult`,`time`,`serving`,`member_id`) VALUES (?,?,?,?,?,?,?)",[_body.menu,_body.menu_img,_body.Introduction,_body.difficult,_body.time,_body.serving,req.session.sid],function(error){
+      connection.query("INSERT INTO `menu01`(`menu`,`menu_img`,`Introduction`,`difficult`,`time`,`serving`,`member_id`,`upload_time_sid`) VALUES (?,?,?,?,?,?,?,?)",[_body.menu,_body.menu_img,_body.Introduction,_body.difficult,_body.time,_body.serving,req.session.sid,_body.upload_time_sid],function(error){
         if (error) throw error;
         connection.query("SELECT `id` FROM `menu01` ORDER BY `id` DESC LIMIT 1",function(error,rows){
           if (error) throw error;
