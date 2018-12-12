@@ -84,7 +84,7 @@ router.route('/serving/:id')
     // res.send("get recipe id " + req.params.id);
     // var subCateId = [ 'country_id', 'serving_id', 'occasion_id', 'difficult_id', 'time_id' ] 
     connection.query(
-        'SELECT `menu`.*, `members`.`nick_name` FROM `members` JOIN `menu` ON `menu`.`member_id`=`members`.`sid` `serving_id`=?',req.params.id, function(error,results){
+        'SELECT `menu`.*, `members`.`nick_name` FROM `members` JOIN `menu` ON `menu`.`member_id`=`members`.`sid` WHERE `serving_id`=?',req.params.id, function(error,results){
             // console.log(results)
         if(error) throw error;
         res.json(results);
