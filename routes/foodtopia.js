@@ -22,7 +22,7 @@ connection.connect(function(err) {
 router
   .route("/menu")
   .get(function(req, res) {
-    connection.query("Select * from menu", function(error, rows) {
+    connection.query("Select * from menu01", function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
@@ -58,7 +58,7 @@ router
 router
   .route("/member_menu/:sid")
   .get(function(req, res) {
-    connection.query("Select * from menu WHERE `member_id`=?",req.params.sid,function(error, rows) {
+    connection.query("Select * from menu01 WHERE `member_id`=?",req.params.sid,function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
