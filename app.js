@@ -95,7 +95,7 @@ app.use('/session', sessionRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter)
 //brain
-app.use('/api', ingredientsRouter);
+app.use('/ingredients', ingredientsRouter);
 //ming
 app.use('/foodtopia', foodtopiaRouter);
 app.use('/update', updateRouter);

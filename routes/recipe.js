@@ -18,7 +18,7 @@ router.route('/recipe')
     .get(function(req, res){
         // GET http://localhost:3000/xxx/recipe
         // res.send("get all recipe")
-        connection.query("select * from menu ", function(error, results) {
+        connection.query("select * from `menu01 ", function(error, results) {
             if(error) throw error;
             res.json(results)
             console.log("Database foodtopia connected")
@@ -36,7 +36,7 @@ router.route('/recipe/:id')
     // 讀取:id參數的值 req.params.id
     // res.send("get recipe id " + req.params.id);
     connection.query(
-        'select * from menu01 where id=?',req.params.id, function(error,results){
+        'SELECT `menu01`.*, `members`.`nick_name` FROM `members` JOIN `menu01` ON `menu01`.`member_id`=`members`.`sid` where id=?',req.params.id, function(error,results){
         if(error) throw error;
         res.json(results)
       })
