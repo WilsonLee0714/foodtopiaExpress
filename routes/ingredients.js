@@ -9,10 +9,54 @@ var connection = mysql.createConnection({
   database: "foodtopia",
   user: "foodtopia",
   password: "",
-  // port: 3306
+  port: 3306
 
 });
-connection.connect();
+// connection.connect();
+connection.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+
+
+// http://localhost:3000/api/:category
+router
+  .route("/:category")
+  .get(function(req, res) {
+    console.log(req.params.category)
+    var category
+    switch (req.params.category) {
+      case 'fruit':
+      category = '新鮮水果';
+      break;
+      case 'vegetable':
+      category = '新鮮蔬菜';
+      break;
+      case 'meat':
+      category = '肉類';
+      break;
+      case 'dairy':
+      category = '乳製品';
+      break;
+      case 'seafood':
+      category = '海鮮類';
+      break;
+      case 'other':
+      category = '食物櫃';
+      break;
+    }
+    //GET http://localhost:3000/xxx/ingredients
+    //  res.send("get all product");
+    connection.query("SELECT * FROM igr_test WHERE main_category=? ",[category],function(err, rows) {
+      if (err) throw err;
+      res.json(rows);
+      console.log(rows)
+    });
+  })
 
 
 // http://localhost:3000/api/ingredients_meat

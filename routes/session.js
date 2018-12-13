@@ -31,6 +31,7 @@ router
     .post(function (req, res) {//登入
         var email = req.body.email;
         var password = req.body.password;
+        var theUrl = req.body.theUrl;
         if (email == "") {
             res.redirect('http://localhost:3001/login');
             // res.json('wrong')
@@ -58,7 +59,7 @@ router
                     req.session.zipCode = rows[0].zipCode;
                     req.session.address = rows[0].address;
                     req.session.login = 1;
-                    res.redirect('http://localhost:3001/memberCenter/basicInfo');
+                    res.redirect(theUrl);
                     // res.send(req.session);
                     
                     //登入會員時候新增blog表單資料
