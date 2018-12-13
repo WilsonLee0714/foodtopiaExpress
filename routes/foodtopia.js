@@ -72,11 +72,20 @@ router
       res.json(rows);
     });
 });
-//部落格評論篩選
+//個人部落格評論篩選
 router
   .route("/member_comment")
     .get(function(req, res) {
-    connection.query("SELECT `menu01`.`member_id`,`menu01`.`menu`, `comment`.* FROM `comment` JOIN `menu01` ON `menu01`.`id`=`comment`.`recipe_id`  WHERE `menu01`.`member_id`=? ORDER BY `id` DESC LIMIT 4",[req.session.sid],function(error,rows){
+    connection.query("SELECT `menu01`.`member_id`,`menu01`.`menu`, `comment`.* FROM `comment` JOIN `menu01` ON `menu01`.`id`=`comment`.`recipe_id`  WHERE `menu01`.`member_id`=? ORDER BY `id` DESC LIMIT 3",[req.session.sid],function(error,rows){
+      if (error) throw error;
+      res.json(rows);
+    })
+})
+//會員部落格評論篩選
+router
+  .route("/member_comment/:sid")
+    .get(function(req, res) {
+    connection.query("SELECT `menu01`.`member_id`,`menu01`.`menu`, `comment`.* FROM `comment` JOIN `menu01` ON `menu01`.`id`=`comment`.`recipe_id`  WHERE `menu01`.`member_id`=? ORDER BY `id` DESC LIMIT 3",req.params.sid,function(error,rows){
       if (error) throw error;
       res.json(rows);
     })

@@ -18,7 +18,7 @@ connection.connect(function(err) {
     console.log("connected as id " + connection.threadId);
 });
 
-//blog月份分類連結迴圈
+//個人近期上傳食譜
 router
   .route("/menu")
   .get(function(req, res) {
@@ -26,7 +26,16 @@ router
       if (error) throw error;
       res.json(results);
     });
-  });
+});
+//其他會員近期上傳食譜
+router
+  .route("/member_menu/:sid")
+  .get(function(req, res) {
+    connection.query("SELECT * FROM `menu01` WHERE `member_id`=? ORDER BY `id` DESC LIMIT 4",req.params.sid, function(error, results) {
+      if (error) throw error;
+      res.json(results);
+    });
+});
 
 //食譜內容頁單筆資料
 router

@@ -20,24 +20,6 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-//設定上傳檔案的資料夾
-// var upload = multer({ dest: 'public/uploads/' })
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-
-var upload = multer({ storage: storage })
-
-//上傳圖片
-router.post('/upload',upload.single('image'),function(req,res,next){
-  res.send(req.file);
-})
-
 //讀取blog個人資料
 router
   .route("/upload_community")
@@ -56,6 +38,23 @@ router
       res.json(rows);
     })
   })
+
+//設定上傳檔案的資料夾
+// var upload = multer({ dest: 'public/uploads/' })
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage })
+//上傳圖片
+router.post('/upload',upload.single('image'),function(req,res,next){
+  res.send(req.file);
+})
 //上傳檔名
 router
   .route("/upload_img_name") 
@@ -65,7 +64,7 @@ router
        if (error) throw error;
        res.json({ message: "新增成功" });
     }) 
-  });
+});
 //welcome修改
 router
   .route("/upload_welcome")

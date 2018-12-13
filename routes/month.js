@@ -28,7 +28,7 @@ router
     });
   });
 
-//單月的食譜清單
+//個人單月的食譜清單
 router
 .route("/menu/:upload_time_sid")
 .get(function(req, res) {
@@ -37,5 +37,13 @@ router
     res.json(rows);
   });
 });
-
+//其他會員單月的食譜清單
+router
+.route("/member_menu/:upload_time_sid/:sid")
+.get(function(req, res) {
+  connection.query("select * from `menu01` WHERE `upload_time_sid`=? AND `member_id`=?",[req.params.upload_time_sid,req.params.sid], function(error, rows) {
+    if (error) throw error;
+    res.json(rows);
+  });
+});
 module.exports = router;  
