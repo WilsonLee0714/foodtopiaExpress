@@ -59,7 +59,7 @@ router
                     req.session.zipCode = rows[0].zipCode;
                     req.session.address = rows[0].address;
                     req.session.login = 1;
-                    if(theUrl=='http://localhost:3001/registerSuccessful' || theUrl=='http://localhost:3001/register'){
+                    if(theUrl=='http://localhost:3001/registerSuccessful' || theUrl=='http://localhost:3001/register' || theUrl=='http://localhost/foodtopia/ab_list.php' || theUrl=='http://localhost/foodtopia/ab_add.php' || theUrl=='http://localhost/foodtopia/ab_edit.php'){
                         res.redirect('http://localhost:3001/memberCenter/basicInfo')
                     } else {
                         res.redirect(theUrl);
