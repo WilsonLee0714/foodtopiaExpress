@@ -27,7 +27,6 @@ connection.connect(function (err) {
 router
   .route("/:category")
   .get(function(req, res) {
-    console.log(req.params.category)
     var category
     switch (req.params.category) {
       case 'fruit':
