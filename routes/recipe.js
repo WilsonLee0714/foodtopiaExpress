@@ -18,7 +18,7 @@ router.route('/recipe')
     .get(function(req, res){
         // GET http://localhost:3000/xxx/recipe
         // res.send("get all recipe")
-        connection.query("select * from `menu01 ", function(error, results) {
+        connection.query("select * from `menu01` ", function(error, results) {
             if(error) throw error;
             res.json(results)
             console.log("Database foodtopia connected")
