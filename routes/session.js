@@ -59,7 +59,11 @@ router
                     req.session.zipCode = rows[0].zipCode;
                     req.session.address = rows[0].address;
                     req.session.login = 1;
-                    res.redirect(theUrl);
+                    if(theUrl=='http://localhost:3001/registerSuccessful' || theUrl=='http://localhost:3001/register'){
+                        res.redirect('http://localhost:3001/memberCenter/basicInfo')
+                    } else {
+                        res.redirect(theUrl);
+                    }
                     // res.send(req.session);
                     
                     //登入會員時候新增blog表單資料
