@@ -64,7 +64,7 @@ router
         if (error) throw error;
         connection.query("SELECT `id` FROM `menu01` ORDER BY `id` DESC LIMIT 1",function(error,rows){
           if (error) throw error;
-          connection.query("INSERT INTO `ingredients_name`(`id`,`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6],function(error){
+          connection.query("INSERT INTO `ingredients_name`(`id`,`name_1`,`name_2`,`name_3`,`name_4`,`name_5`,`name_6`,`name_7`,`name_8`) VALUES (?,?,?,?,?,?,?,?,?)",[rows[0].id,_body.name_1,_body.name_2,_body.name_3,_body.name_4,_body.name_5,_body.name_6,_body.name_7,_body.name_8],function(error){
             if (error) throw error;
             connection.query("INSERT INTO `step_img`(`id`,`step_img_1`,`step_img_2`,`step_img_3`,`step_img_4`,`step_img_5`,`step_img_6`) VALUES (?,?,?,?,?,?,?)",[rows[0].id,_body.step_img_1,_body.step_img_2,_body.step_img_3,_body.step_img_4,_body.step_img_5,_body.step_img_6],function(error){
               if (error) throw error;
@@ -84,7 +84,10 @@ router
                             if (error) throw error;
                             connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar7,_body.name_7,_body.dataCar7],function(error){
                               if (error) throw error;
-                              res.json({ message: "上傳食譜成功" });
+                              connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar8,_body.name_8,_body.dataCar8],function(error){
+                                if (error) throw error;
+                                res.json({ message: "上傳食譜成功" });
+                              })
                             })
                           })
                         })
