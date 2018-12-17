@@ -74,24 +74,25 @@ router
                   if (error) throw error;
                   connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar2,_body.name_2,_body.dataCar2],function(error){
                     if (error) throw error;
+                    res.json({ message: "上傳食譜成功" });
                     connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar3,_body.name_3,_body.dataCar3],function(error){
                       if (error) throw error;
-                      connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar4,_body.name_4,_body.dataCar4],function(error){
-                        if (error) throw error;
-                        connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar5,_body.name_5,_body.dataCar5],function(error){
-                          if (error) throw error;
-                          connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar6,_body.name_6,_body.dataCar6],function(error){
-                            if (error) throw error;
-                            connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar7,_body.name_7,_body.dataCar7],function(error){
-                              if (error) throw error;
-                              connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar8,_body.name_8,_body.dataCar8],function(error){
-                                if (error) throw error;
-                                res.json({ message: "上傳食譜成功" });
-                              })
-                            })
-                          })
-                        })
-                      })
+                    //   connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar4,_body.name_4,_body.dataCar4],function(error){
+                    //     if (error) throw error;
+                    //     connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar5,_body.name_5,_body.dataCar5],function(error){
+                    //       if (error) throw error;
+                    //       connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar6,_body.name_6,_body.dataCar6],function(error){
+                    //         if (error) throw error;
+                    //         connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar7,_body.name_7,_body.dataCar7],function(error){
+                    //           if (error) throw error;
+                    //           connection.query("INSERT INTO `ingredients`(`sid`,`ingredients_img`,`ingredients_name`,`ingredients_id`) VALUES (?,?,?,?)",[rows[0].id,"PG"+_body.dataCar8,_body.name_8,_body.dataCar8],function(error){
+                    //             if (error) throw error;
+                    //             res.json({ message: "上傳食譜成功" });
+                              // })
+                            // })
+                          // })
+                        // })
+                      // })
                     })
                   })
                 })

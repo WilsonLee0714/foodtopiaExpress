@@ -24,7 +24,7 @@ router
     //取得購物車內容
     .get(function (req, res) {
         connection.query(
-            "SELECT c.sid, c.member_sid, c.qty, c.product_id, p.product_name, p.price, p.spec, p.product_img " +
+            "SELECT c.sid, c.member_sid, c.qty, c.product_id, p.product_name, p.price, p.spec, p.product_img, p.description " +
             "FROM cart AS c INNER JOIN igr_test AS p ON c.product_id=p.product_id " +
             "WHERE member_sid=?", [req.session.sid],
             function (err, rows) {

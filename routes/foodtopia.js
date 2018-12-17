@@ -58,7 +58,7 @@ router
 router
   .route("/member_menu/:sid")
   .get(function(req, res) {
-    connection.query("Select * from menu01 WHERE `member_id`=?",req.params.sid,function(error, rows) {
+    connection.query("Select * from menu01 WHERE `member_id`=? ORDER BY `id` DESC",req.params.sid,function(error, rows) {
       if (error) throw error;
       res.json(rows);
     });
