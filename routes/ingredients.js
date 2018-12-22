@@ -53,7 +53,6 @@ router
     connection.query("SELECT * FROM igr_test WHERE main_category=? ",[category],function(err, rows) {
       if (err) throw err;
       res.json(rows);
-      console.log(rows)
     });
   })
 

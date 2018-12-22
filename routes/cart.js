@@ -58,6 +58,8 @@ router
                                         throw err;
                                     res.json('商品數量已修改')
                                 })
+                        } else {
+                            res.json('商品數量不能再減少了')
                         }
                     })
                 break;
